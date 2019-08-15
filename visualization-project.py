@@ -1,4 +1,8 @@
 import csv
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 from operator import itemgetter
 # libraries: Seaborn
 
@@ -13,14 +17,8 @@ csv_file = "pokemon.csv"
 # contain main data
 data = {}
 data_list = []
-
-
-def import_csv():
-    with open(csv_file, 'r') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            print(row)
-    file.close()
+data_list_integers = []
+data_pandas = pd.read_csv(csv_file)
 
 
 def import_csv2(file):
@@ -40,6 +38,21 @@ def import_csv2(file):
                              int(row["defense"]) + int(row["sp_defense"]) + int(row["hp"]) + int(row["speed"]),
                              bool(int(row["is_legendary"]))])
     f.close()
+
+
+# experimental, removes all non-integers from data_list
+def create_data_list_integer():
+    i = 0
+    for pokemon in data_list:
+        temp = pokemon.copy()
+        for attr in pokemon:
+            if type(attr) != int:
+                temp.remove(attr)
+        temp.pop()
+        if i % 20 == 0:
+            data_list_integers.append(temp)
+        i += 1
+    print(str(data_list_integers))
 
 
 # sorts the data_list for given attribute from lowest to highest
@@ -62,10 +75,19 @@ def sort_to_max(attribute):
 
 import_csv2(csv_file)
 print(str(data_list))
-sort_to_max("total_power")
-sort_to_min("attack")
+create_data_list_integer()
+
+heat_map = sns.heatmap(data_list_integers, xticklabels=["Gen.", "Atk", "SP_Atk", "Def", "SP_Def", "HP",
+                                                        "Speed"], yticklabels=False)
+plt.show()
+#sns.heatmap(data_pandas.corr(), annot=True, linewidths=0.5)
+#plt.show()
 
 
-# int: attack, defense, hp, pokedex_number, sp_attack, sp_defense, speed, generation
+
+
+################
+# int: pokedex_number,generation,attack,sp_attack,defense,sp_defense,hp,speed,total_power
+
 # string: name, type1, type2 (can be empty string)
 # bool: is_legendary
