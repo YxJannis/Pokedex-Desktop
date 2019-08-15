@@ -1,5 +1,7 @@
 import csv
 from operator import itemgetter
+# libraries: Seaborn
+
 
 # Easy acces to list indices of data_list for all attributes
 # pokedex_number,name,generation,type1,type2,attack,sp_attack,defense,sp_defense,hp,speed,total_power,is_legendary
