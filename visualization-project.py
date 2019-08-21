@@ -1,13 +1,12 @@
 import csv
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 from operator import itemgetter
-# libraries: Seaborn
+import plotly.graph_objects as go
 
 
-# Easy acces to list indices of data_list for all attributes
+# Easy access to list indices of data_list for all attributes
 # pokedex_number,name,generation,type1,type2,attack,sp_attack,defense,sp_defense,hp,speed,total_power,is_legendary
 list_index = {"pokedex_number": 0, "name": 1, "generation": 2, "type1": 3, "type2": 4, "attack": 5, "sp_attack": 6,
               "defense": 7, "sp_defense": 8, "hp": 9, "speed": 10, "total_power": 11, "is_legendary": 12}
@@ -77,11 +76,8 @@ import_csv2(csv_file)
 print(str(data_list))
 create_data_list_integer()
 
-heat_map = sns.heatmap(data_list_integers, xticklabels=["Gen.", "Atk", "SP_Atk", "Def", "SP_Def", "HP",
-                                                        "Speed"], yticklabels=False)
-plt.show()
-#sns.heatmap(data_pandas.corr(), annot=True, linewidths=0.5)
-#plt.show()
+fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
+fig.show()
 
 
 
