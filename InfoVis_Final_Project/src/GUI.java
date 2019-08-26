@@ -97,6 +97,9 @@ public class GUI {
 
         JPanel teamPanel = new JPanel();
         teamPanel.add(new JTextField("Hello test"));
+
+
+
         menuPanel.add(teamPanel);
 
         frame.add(menuPanel, BorderLayout.WEST);
