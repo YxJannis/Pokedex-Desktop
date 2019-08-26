@@ -162,7 +162,7 @@ public class GridLayoutTest {
         // Image handling
         BufferedImage pokePicture = null;
         try {
-            pokePicture = ImageIO.read(new File("/home/jannis/Desktop/InfoVis_Final_Project/src/images/Test-Composition-60x60.png"));
+            pokePicture = ImageIO.read(new File("src/images/Test-Composition-60x60.png"));
         } catch (IOException e) {
             System.out.println("Error while reading Image.");
             e.printStackTrace();
