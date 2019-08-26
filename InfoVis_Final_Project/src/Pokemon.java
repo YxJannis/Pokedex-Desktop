@@ -11,6 +11,7 @@ public class Pokemon {
 
     String name;
     int number;
+    int generation;
     boolean legendary;
     Type type1;
     Type type2;
@@ -96,6 +97,14 @@ public class Pokemon {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
     }
 
     public boolean isLegendary() {
