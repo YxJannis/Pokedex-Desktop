@@ -29,8 +29,8 @@ public class ImageHandler {
         }
     }
 
-    public BufferedImage generateIconComposition(int attack_scale, int defense_scale, int spAttack_scale,
-                                                 int spDefense_scale, int speed_scale, int health_scale){
+    public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
+                                                 double spDefense_scale, double speed_scale, double health_scale){
         BufferedImage attack_scaled = scaleImage(attack, attack_scale);
         BufferedImage defense_scaled = scaleImage(defense, defense_scale);
         BufferedImage spAttack_scaled = scaleImage(spAttack, spAttack_scale);
@@ -43,7 +43,7 @@ public class ImageHandler {
         return drawBorder(finalImage);
     }
 
-    public static BufferedImage scaleImage(BufferedImage imageToScale, int scaleFactor) {
+    public static BufferedImage scaleImage2(BufferedImage imageToScale, int scaleFactor) {
         BufferedImage scaledImage = null;
         if (imageToScale != null) {
             scaledImage = new BufferedImage(scaleFactor, scaleFactor, imageToScale.getType());
@@ -52,6 +52,23 @@ public class ImageHandler {
             graphics2D.dispose();
         }
         return scaledImage;
+    }
+
+    public static BufferedImage scaleImage(BufferedImage imageToScale, double scaleFactor){
+        // scale factor can range from 0.1(min) to 1.0 (max)
+        // min factor maybe has to be changed
+        BufferedImage scaledImage = null;
+
+        if (imageToScale != null){
+            scaledImage = new BufferedImage((int)Math.round(imageBaseWidth*scaleFactor),
+                    (int)Math.round(imageBaseHeight*scaleFactor), imageToScale.getType());
+            Graphics2D g2 = scaledImage.createGraphics();
+            g2.drawImage(imageToScale,0,0, (int)Math.round(imageBaseWidth*scaleFactor),
+                    (int)Math.round(imageBaseHeight*scaleFactor),null);
+            g2.dispose();
+        }
+        return scaledImage;
+
     }
 
     public static BufferedImage joinImages(BufferedImage img1, BufferedImage img2, BufferedImage img3,

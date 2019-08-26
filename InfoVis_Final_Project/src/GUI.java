@@ -1,11 +1,15 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class GUI {
 
@@ -15,70 +19,88 @@ public class GUI {
         int rows = 15;
         int cols = 15;
 
-        int [] attackData = new int[rows*cols];
-        int [] defenseData = new int[rows*cols];
-        int [] spAttackData = new int[rows*cols];
-        int [] spDefenseData = new int[rows*cols];
-        int [] speedData = new int[rows*cols];
-        int [] healthData = new int[rows*cols];
-        Random random = new Random();
+        double [] attackData = new double[rows*cols];
+        double [] defenseData = new double[rows*cols];
+        double [] spAttackData = new double[rows*cols];
+        double [] spDefenseData = new double[rows*cols];
+        double [] speedData = new double[rows*cols];
+        double [] healthData = new double[rows*cols];
 
 
-        attackData[0] = 40;
-        defenseData[0] = 40;
-        spAttackData[0] = 40;
-        spDefenseData[0] = 40;
-        speedData[0] = 40;
-        healthData[0] = 40;
+        attackData[0] = 1;
+        defenseData[0] = 1;
+        spAttackData[0] = 1;
+        spDefenseData[0] = 1;
+        speedData[0] = 1;
+        healthData[0] = 1;
+        attackData[1] = 0.2;
+        defenseData[1] = 0.2;
+        spAttackData[1] = 0.2;
+        spDefenseData[1] = 0.2;
+        speedData[1] = 0.2;
+        healthData[1] = 0.2;
 
 
-        for (int j = 1; j < rows*cols; j++) {
-            attackData[j] = (random.nextInt()%10)+20;
-            defenseData[j] = (random.nextInt()%10)+20;
-            spAttackData[j] = (random.nextInt()%10)+20;
-            spDefenseData[j] = (random.nextInt()%10)+20;
-            speedData[j] = (random.nextInt()%10)+20;
-            healthData[j] = (random.nextInt()%10)+20;
+        for (int j = 2; j < rows*cols; j++) {
+            attackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
+            defenseData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
+            spAttackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
+            spDefenseData[j] =ThreadLocalRandom.current().nextDouble(0.2, 1.0);
+            speedData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
+            healthData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
 
         }
 
 
-        // initializing GUI grid layout
+        // create grid layout with matrix
         JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("GridLayout Test");
+        JFrame frame = new JFrame("Pokedex Desktop");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setLayout(new GridLayout(rows, cols));
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(rows, cols));
 
 
-        // Image handling
-        BufferedImage pokePicture = null;
-        try {
-            pokePicture = ImageIO.read(new File("src/images/Test-Composition-60x60.png"));
-        } catch (IOException e) {
-            System.out.println("Error while reading Image.");
-            e.printStackTrace();
-        }
-
-        // filling grid layout
+        // filling grid layout matrix
         for (int i=0; i<rows*cols; i++){
-            if (pokePicture != null) {
-                ImageHandler imgProcessor = new ImageHandler();
-                pokePicture = imgProcessor.generateIconComposition(attackData[i],defenseData[i],spAttackData[i],
-                        spDefenseData[i],speedData[i],healthData[i]);
+            ImageHandler imgProcessor = new ImageHandler();
+            BufferedImage pokePicture = imgProcessor.generateIconComposition(attackData[i],defenseData[i],spAttackData[i],
+                    spDefenseData[i],speedData[i],healthData[i]);
 
-                JLabel picLabel = new JLabel((new ImageIcon(pokePicture)));
-                panel.add(picLabel);
-            }
-            else
-                frame.add(new JTextField("IMAGE \n ERROR"));
-            //frame.add(new JTextField(data[i]));
+            JLabel picLabel = new JLabel((new ImageIcon(pokePicture)));
+            panel.add(picLabel);
         }
 
         JScrollPane scrollpane = new JScrollPane(panel);
-        frame.add(scrollpane);
 
+
+        // create sidebar
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new GridLayout(10,1));
+
+        JPanel sortPanel = new JPanel();
+        JButton sortButton = new JButton("Sort by Attribute:");
+        sortPanel.add(sortButton);
+        menuPanel.add(sortPanel);
+
+        sortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+
+        JPanel filterPanel = new JPanel();
+        JButton filterButton = new JButton("Filter by trait:");
+        filterPanel.add(filterButton);
+        menuPanel.add(filterPanel);
+
+        JPanel teamPanel = new JPanel();
+        teamPanel.add(new JTextField("Hello test"));
+        menuPanel.add(teamPanel);
+
+        frame.add(menuPanel, BorderLayout.WEST);
+        frame.add(scrollpane);
         frame.pack();
         frame.setVisible(true);
     }
