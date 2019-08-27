@@ -17,6 +17,8 @@ public class Pokemon {
     Type type2;
     BufferedImage sprite;
 
+    boolean chosenForTeaM = false;
+
     public Pokemon() {
     }
 
@@ -137,5 +139,13 @@ public class Pokemon {
 
     public void setSprite(BufferedImage sprite) {
         this.sprite = sprite;
+    }
+
+    public boolean isChosenForTeaM() {
+        return chosenForTeaM;
+    }
+
+    public void setChosenForTeaM(boolean chosenForTeaM) {
+        this.chosenForTeaM = chosenForTeaM;
     }
 }

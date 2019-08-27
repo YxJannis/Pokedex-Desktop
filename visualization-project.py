@@ -1,9 +1,6 @@
 import csv
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 from operator import itemgetter
-import plotly.graph_objects as go
 
 
 # Easy access to list indices of data_list for all attributes
@@ -11,7 +8,7 @@ import plotly.graph_objects as go
 list_index = {"pokedex_number": 0, "name": 1, "generation": 2, "type1": 3, "type2": 4, "attack": 5, "sp_attack": 6,
               "defense": 7, "sp_defense": 8, "hp": 9, "speed": 10, "total_power": 11, "is_legendary": 12}
 
-csv_file = "pokemon.csv"
+csv_file = "InfoVis_Final_Project\src\pokemon-2.csv"
 
 # contain main data
 data = {}
@@ -76,8 +73,10 @@ import_csv2(csv_file)
 print(str(data_list))
 create_data_list_integer()
 
-fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
-fig.show()
+sort_to_max("attack")
+
+#fig = go.Figure(data=go.Bar(y=[2, 3, 1]))
+#fig.show()
 
 
 

@@ -1,25 +1,20 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 public class GUI {
 
     public static void main(String[] args) {
 
+        DataProvider dataProvider = new DataProvider();
+
         // defining rows and columns of grid layout and filling test data arrays
-        int rows = 20;
-        int cols = 20;
+        int rows = 28;
+        int cols = 28;
 
         double [] attackData = new double[rows*cols];
         double [] defenseData = new double[rows*cols];
@@ -28,22 +23,17 @@ public class GUI {
         double [] speedData = new double[rows*cols];
         double [] healthData = new double[rows*cols];
 
-
-        attackData[0] = 1;
-        defenseData[0] = 1;
-        spAttackData[0] = 1;
-        spDefenseData[0] = 1;
-        speedData[0] = 1;
-        healthData[0] = 1;
-        attackData[1] = 0.2;
-        defenseData[1] = 0.2;
-        spAttackData[1] = 0.2;
-        spDefenseData[1] = 0.2;
-        speedData[1] = 0.2;
-        healthData[1] = 0.2;
+        for (int i = 0; i < 17; i++) {
+            attackData[i] = 0.2 + i*0.05;
+            defenseData[i] = 0.2 + i*0.05;
+            spAttackData[i] = 0.2 + i*0.05;
+            spDefenseData[i] = 0.2 + i*0.05;
+            speedData[i] = 0.2 + i*0.05;
+            healthData[i] = 0.2 + i*0.05;
+        }
 
 
-        for (int j = 2; j < rows*cols; j++) {
+        for (int j = 17; j < rows*cols; j++) {
             attackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
             defenseData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
             spAttackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
@@ -78,18 +68,6 @@ public class GUI {
 
         BufferedImage circleImg = imgHandler.getCircleImg();
         BufferedImage testButtonImg = imgHandler.getTestButtonImg();
-
-
-        // filling grid layout matrix with images according to scaling
-        for (int i=0; i<rows*cols; i++){
-            BufferedImage pokePicture = imgHandler.generateIconComposition(attackData[i],defenseData[i],spAttackData[i],
-                    spDefenseData[i],speedData[i],healthData[i]);
-
-            JLabel picLabel = new JLabel((new ImageIcon(pokePicture)));
-            panel.add(picLabel);
-        }
-
-        JScrollPane scrollpane = new JScrollPane(panel);
 
 
         // create sidebar
@@ -208,11 +186,83 @@ public class GUI {
         teamPanel.setLayout(new BoxLayout(teamPanel,BoxLayout.Y_AXIS));
         teamPanel.add(new JLabel((new ImageIcon(yourTeamImg))));
         // Add circles for team selection on sidebar (team size = 6)
-        for (int i = 0; i < 6; i++) {
-           teamPanel.add(new JLabel(new ImageIcon(circleImg)));
-        }
+        JLabel circleOne = new JLabel(new ImageIcon(circleImg));
+        JLabel circleTwo = new JLabel(new ImageIcon(circleImg));
+        JLabel circleThree = new JLabel(new ImageIcon(circleImg));
+        JLabel circleFour = new JLabel(new ImageIcon(circleImg));
+        JLabel circleFive = new JLabel(new ImageIcon(circleImg));
+        JLabel circleSix = new JLabel(new ImageIcon(circleImg));
+
+        teamPanel.add(circleOne);
+        teamPanel.add(circleTwo);
+        teamPanel.add(circleThree);
+        teamPanel.add(circleFour);
+        teamPanel.add(circleFive);
+        teamPanel.add(circleSix);
 
         menuPanel.add(teamPanel);
+
+        for (Pokemon pokEntitiy: dataProvider.getPokemon()) {
+            double attackScale = dataProvider.getAttackScale(pokEntitiy.getAttack());
+            double defenseScale = dataProvider.getDefenseScale(pokEntitiy.getDefense());
+            double spAttackScale = dataProvider.getSpAttackScale(pokEntitiy.getSpAttack());
+            double spDefenseScale = dataProvider.getSpDefenseScale(pokEntitiy.getSpDefense());
+            double speedScale = dataProvider.getSpeedScale(pokEntitiy.getSpeed());
+            double healthScale = dataProvider.getHealthScale(pokEntitiy.getHealth());
+            BufferedImage pokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
+            ImageIcon pokeIcon = new ImageIcon(pokePicture);
+            JLabel picLabel = new JLabel(pokeIcon);
+
+            JPopupMenu pokeInfoPopup = new JPopupMenu("Pokemon Info");
+            pokeInfoPopup.add(new JMenuItem(pokEntitiy.getName() + ", Nr: " + pokEntitiy.getNumber()));
+            pokeInfoPopup.add(new JMenuItem("Attack: " + pokEntitiy.getAttack()));
+            pokeInfoPopup.add(new JMenuItem("Defense: " + pokEntitiy.getDefense()));
+            pokeInfoPopup.add(new JMenuItem("Special Atk: " + pokEntitiy.getSpAttack()));
+            pokeInfoPopup.add(new JMenuItem("Special Def: " + pokEntitiy.getSpDefense()));
+            pokeInfoPopup.add(new JMenuItem("Speed: " + pokEntitiy.getSpeed()));
+            pokeInfoPopup.add(new JMenuItem("Health: " + pokEntitiy.getHealth()));
+
+
+            picLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                            pokeInfoPopup.show(picLabel,e.getX(),e.getY());
+                        }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (!pokEntitiy.isChosenForTeaM()) {
+                        BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.ORANGE);
+                        picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                        pokEntitiy.setChosenForTeaM(true);
+                        
+                    }
+                    else{
+                        BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
+                        picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                        pokEntitiy.setChosenForTeaM(false);
+                    }
+                }
+            });
+
+
+
+            panel.add(picLabel);
+        }
+
+        /*
+        // filling grid layout matrix with dummy images using test arrays
+        for (int i=0; i<rows*cols; i++){
+            BufferedImage pokePicture = imgHandler.generateIconComposition(attackData[i],defenseData[i],spAttackData[i],
+                    spDefenseData[i],speedData[i],healthData[i]);
+
+            JLabel picLabel = new JLabel((new ImageIcon(pokePicture)));
+            panel.add(picLabel);
+        }*/
+
+        JScrollPane scrollpane = new JScrollPane(panel);
+
+
 
         frame.add(menuPanel, BorderLayout.WEST);
         frame.add(scrollpane);

@@ -42,7 +42,7 @@ public class ImageHandler {
     }
 
     public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
-                                                 double spDefense_scale, double speed_scale, double health_scale){
+                                                 double spDefense_scale, double speed_scale, double health_scale, Color backgroundColor){
         BufferedImage attack_scaled = scaleImage(attackImg, attack_scale);
         BufferedImage defense_scaled = scaleImage(defenseImg, defense_scale);
         BufferedImage spAttack_scaled = scaleImage(spAttackImg, spAttack_scale);
@@ -50,7 +50,7 @@ public class ImageHandler {
         BufferedImage speed_scaled = scaleImage(speedImg, speed_scale);
         BufferedImage health_scaled = scaleImage(healthImg, health_scale);
 
-        BufferedImage finalImage = joinImages(attack_scaled, spAttack_scaled, speed_scaled, defense_scaled,spDefense_scaled, health_scaled);
+        BufferedImage finalImage = joinImages(attack_scaled, spAttack_scaled, speed_scaled, defense_scaled,spDefense_scaled, health_scaled, backgroundColor);
 
         return drawBorder(finalImage);
     }
@@ -74,7 +74,7 @@ public class ImageHandler {
 
 
     private static BufferedImage joinImages(BufferedImage img1, BufferedImage img2, BufferedImage img3,
-                                           BufferedImage img4, BufferedImage img5, BufferedImage img6){
+                                           BufferedImage img4, BufferedImage img5, BufferedImage img6, Color backgroundColor){
         int offset = 0;
         int width = imageBaseWidth*3+offset;
         int height = imageBaseHeight*2+offset;
@@ -82,7 +82,7 @@ public class ImageHandler {
         BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = newImage.createGraphics();
         Color oldColor = g2.getColor();
-        g2.setPaint(Color.WHITE);
+        g2.setPaint(backgroundColor);
         g2.fillRect(0,0,width,height);
         g2.setColor(oldColor);
 
