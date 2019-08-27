@@ -13,6 +13,7 @@ public class DataReader {
 
     public DataReader() {
         readPokemon();
+        readSprites();
     }
 
     public ArrayList<Pokemon> getPokemon() {
@@ -29,10 +30,12 @@ public class DataReader {
             while(line != null){
                 String[] attributes = line.split(",");
 
+
+                /*
                 System.out.println(attributes[32] + " " + attributes[30] + " " + attributes[39] + " " + attributes[40] + " "
                         + attributes[36] + " " + attributes[37] + " " + attributes[19] + " " + attributes[25] + " " +
                         attributes[33] + " " + attributes[34] + " " + attributes[35] + " " + attributes[28]);
-
+                */
                 Pokemon p = new Pokemon();
 
                 p.setNumber(Integer.parseInt(attributes[32]));

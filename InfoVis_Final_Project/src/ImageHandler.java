@@ -19,8 +19,9 @@ public class ImageHandler {
     private BufferedImage sortHeaderImg = null;
     private BufferedImage filterHeaderImg = null;
     private BufferedImage yourTeamImg = null;
-    private BufferedImage circleImg = null;
+    private BufferedImage pokeBallImg = null;
     private BufferedImage testButtonImg = null;
+    private BufferedImage testSpriteImg = null;
 
     public ImageHandler(){
         try {
@@ -30,15 +31,26 @@ public class ImageHandler {
             spDefenseImg = ImageIO.read(new File("src/images/SpDefense-40x40.png"));
             speedImg = ImageIO.read(new File("src/images/Speed-40x40.png"));
             healthImg = ImageIO.read(new File("src/images/Health-40x40.png"));
-            circleImg = ImageIO.read(new File("src/images/Circle.png"));
+            pokeBallImg = ImageIO.read(new File("src/images/pokeball-1.png"));
             testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
             sortHeaderImg = ImageIO.read(new File("src/images/sort-header.png"));
             filterHeaderImg = ImageIO.read(new File("src/images/filter-header.png"));
             yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
+            testSpriteImg = ImageIO.read(new File("src/images/test-sprite.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public BufferedImage paintCircleWithSprite(Pokemon pokemon){
+        //BufferedImage tempCircle = pokeBallImg;
+        BufferedImage spriteImg = pokemon.getSprite();
+        //BufferedImage spriteImg = scaleImage(pokemon.getSprite(),0.75);
+        //Graphics2D g2d = tempCircle.createGraphics();
+        //g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        //g2d.drawImage(spriteImg,2,3,null);
+        return spriteImg;
     }
 
     public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
@@ -158,8 +170,8 @@ public class ImageHandler {
         return yourTeamImg;
     }
 
-    public BufferedImage getCircleImg() {
-        return circleImg;
+    public BufferedImage getPokeBallImg() {
+        return pokeBallImg;
     }
 
     public BufferedImage getTestButtonImg() {

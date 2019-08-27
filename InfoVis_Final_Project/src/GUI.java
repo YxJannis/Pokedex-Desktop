@@ -1,48 +1,133 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.*;
 
 public class GUI {
 
+    static int circleCount = 0;
+
+    private static void fillGridWithPokemon(DataProvider dataProvider, ImageHandler imgHandler, JPanel panel, JLabel pokeBallOne, JLabel pokeBallTwo, JLabel pokeBallThree, JLabel pokeBallFour, JLabel pokeBallFive,JLabel pokeBallSix, String sortBy){
+
+        dataProvider.sortByAttribute(sortBy);
+
+        for (Pokemon pokEntity: dataProvider.getPokemon()) {
+            double attackScale = dataProvider.getAttackScale(pokEntity.getAttack());
+            double defenseScale = dataProvider.getDefenseScale(pokEntity.getDefense());
+            double spAttackScale = dataProvider.getSpAttackScale(pokEntity.getSpAttack());
+            double spDefenseScale = dataProvider.getSpDefenseScale(pokEntity.getSpDefense());
+            double speedScale = dataProvider.getSpeedScale(pokEntity.getSpeed());
+            double healthScale = dataProvider.getHealthScale(pokEntity.getHealth());
+            BufferedImage pokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
+            ImageIcon pokeIcon = new ImageIcon(pokePicture);
+            JLabel picLabel = new JLabel(pokeIcon);
+
+            JPopupMenu pokeInfoPopup = new JPopupMenu("Pokemon Info");
+            pokeInfoPopup.add(new JMenuItem(pokEntity.getName() + " - Nr: " + pokEntity.getNumber()));
+            pokeInfoPopup.add(new JMenuItem("Attack:" + pokEntity.getAttack()));
+            pokeInfoPopup.add(new JMenuItem("Defense:" + pokEntity.getDefense()));
+            pokeInfoPopup.add(new JMenuItem("Special Atk:" + pokEntity.getSpAttack()));
+            pokeInfoPopup.add(new JMenuItem("Special Def:" + pokEntity.getSpDefense()));
+            pokeInfoPopup.add(new JMenuItem("Speed:" + pokEntity.getSpeed()));
+            pokeInfoPopup.add(new JMenuItem("Health:" + pokEntity.getHealth()));
+
+
+            // Team Management
+            picLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    pokeInfoPopup.show(picLabel,e.getX()+5,e.getY()+5);
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (!pokEntity.isChosenForTeam()) {
+                        if (circleCount <=5) {
+                            BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.ORANGE);
+                            picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                            pokEntity.setChosenForTeam(true);
+
+                            switch(circleCount){
+                                case 0:
+                                    pokeBallOne.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallOne set");
+                                    break;
+                                case 1:
+                                    pokeBallTwo.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallTwo set");
+                                    break;
+                                case 2:
+                                    pokeBallThree.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallThree set");
+                                    break;
+                                case 3:
+                                    pokeBallFour.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallFour set");
+                                    break;
+                                case 4:
+                                    pokeBallFive.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    break;
+                                case 5:
+                                    pokeBallSix.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    break;
+                            }
+                            circleCount++;
+                        }
+                    }
+
+                    else if (pokEntity.isChosenForTeam()){
+                        BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
+                        picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                        pokEntity.setChosenForTeam(false);
+                        circleCount--;
+
+                        switch(circleCount){
+                            case 0:
+                                pokeBallOne.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallOne unset");
+                                break;
+                            case 1:
+                                pokeBallTwo.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallTwo unset");
+                                break;
+                            case 2:
+                                pokeBallThree.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 3:
+                                pokeBallFour.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 4:
+                                pokeBallFive.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 5:
+                                pokeBallSix.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallSix unset");
+                                break;
+                        }
+                    }
+                }
+            });
+
+            panel.add(picLabel);
+            JScrollPane scrollpane = new JScrollPane(panel);
+        }
+    }
+
     public static void main(String[] args) {
+
 
         DataProvider dataProvider = new DataProvider();
 
-        // defining rows and columns of grid layout and filling test data arrays
+        // defining rows and columns of grid layout
         int rows = 28;
         int cols = 28;
-
-        double [] attackData = new double[rows*cols];
-        double [] defenseData = new double[rows*cols];
-        double [] spAttackData = new double[rows*cols];
-        double [] spDefenseData = new double[rows*cols];
-        double [] speedData = new double[rows*cols];
-        double [] healthData = new double[rows*cols];
-
-        for (int i = 0; i < 17; i++) {
-            attackData[i] = 0.2 + i*0.05;
-            defenseData[i] = 0.2 + i*0.05;
-            spAttackData[i] = 0.2 + i*0.05;
-            spDefenseData[i] = 0.2 + i*0.05;
-            speedData[i] = 0.2 + i*0.05;
-            healthData[i] = 0.2 + i*0.05;
-        }
-
-
-        for (int j = 17; j < rows*cols; j++) {
-            attackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-            defenseData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-            spAttackData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-            spDefenseData[j] =ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-            speedData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-            healthData[j] = ThreadLocalRandom.current().nextDouble(0.2, 1.0);
-
-        }
-
 
         // create grid layout with matrix
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -66,7 +151,7 @@ public class GUI {
         BufferedImage filterHeaderImg = imgHandler.getFilterHeaderImg();
         BufferedImage yourTeamImg = imgHandler.getYourTeamImg();
 
-        BufferedImage circleImg = imgHandler.getCircleImg();
+        BufferedImage pokeBallImg = imgHandler.getPokeBallImg();
         BufferedImage testButtonImg = imgHandler.getTestButtonImg();
 
 
@@ -185,85 +270,137 @@ public class GUI {
         JPanel teamPanel = new JPanel();
         teamPanel.setLayout(new BoxLayout(teamPanel,BoxLayout.Y_AXIS));
         teamPanel.add(new JLabel((new ImageIcon(yourTeamImg))));
-        // Add circles for team selection on sidebar (team size = 6)
-        JLabel circleOne = new JLabel(new ImageIcon(circleImg));
-        JLabel circleTwo = new JLabel(new ImageIcon(circleImg));
-        JLabel circleThree = new JLabel(new ImageIcon(circleImg));
-        JLabel circleFour = new JLabel(new ImageIcon(circleImg));
-        JLabel circleFive = new JLabel(new ImageIcon(circleImg));
-        JLabel circleSix = new JLabel(new ImageIcon(circleImg));
 
-        teamPanel.add(circleOne);
-        teamPanel.add(circleTwo);
-        teamPanel.add(circleThree);
-        teamPanel.add(circleFour);
-        teamPanel.add(circleFive);
-        teamPanel.add(circleSix);
+        // Add pokeballs for team selection on sidebar (team size = 6)
+        JLabel pokeBallOne = new JLabel(new ImageIcon(imgHandler.getPokeBallImg()));
+        JLabel pokeBallTwo = new JLabel(new ImageIcon(imgHandler.getPokeBallImg()));
+        JLabel pokeBallThree = new JLabel(new ImageIcon(pokeBallImg));
+        JLabel pokeBallFour = new JLabel(new ImageIcon(pokeBallImg));
+        JLabel pokeBallFive = new JLabel(new ImageIcon(pokeBallImg));
+        JLabel pokeBallSix = new JLabel(new ImageIcon(pokeBallImg));
+
+        teamPanel.add(pokeBallOne);
+        teamPanel.add(pokeBallTwo);
+        teamPanel.add(pokeBallThree);
+        teamPanel.add(pokeBallFour);
+        teamPanel.add(pokeBallFive);
+        teamPanel.add(pokeBallSix);
 
         menuPanel.add(teamPanel);
 
-        for (Pokemon pokEntitiy: dataProvider.getPokemon()) {
-            double attackScale = dataProvider.getAttackScale(pokEntitiy.getAttack());
-            double defenseScale = dataProvider.getDefenseScale(pokEntitiy.getDefense());
-            double spAttackScale = dataProvider.getSpAttackScale(pokEntitiy.getSpAttack());
-            double spDefenseScale = dataProvider.getSpDefenseScale(pokEntitiy.getSpDefense());
-            double speedScale = dataProvider.getSpeedScale(pokEntitiy.getSpeed());
-            double healthScale = dataProvider.getHealthScale(pokEntitiy.getHealth());
+        fillGridWithPokemon(dataProvider,imgHandler,panel,pokeBallOne,pokeBallTwo,pokeBallThree,pokeBallFour,pokeBallFive,pokeBallSix, "number");
+
+        sortByAttackBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fillGridWithPokemon(dataProvider,imgHandler,panel,pokeBallOne,pokeBallTwo,pokeBallThree,pokeBallFour,pokeBallFive,pokeBallSix, "attack");
+            }
+        });
+
+
+        /*
+        // Fill images
+        for (Pokemon pokEntity: dataProvider.getPokemon()) {
+            double attackScale = dataProvider.getAttackScale(pokEntity.getAttack());
+            double defenseScale = dataProvider.getDefenseScale(pokEntity.getDefense());
+            double spAttackScale = dataProvider.getSpAttackScale(pokEntity.getSpAttack());
+            double spDefenseScale = dataProvider.getSpDefenseScale(pokEntity.getSpDefense());
+            double speedScale = dataProvider.getSpeedScale(pokEntity.getSpeed());
+            double healthScale = dataProvider.getHealthScale(pokEntity.getHealth());
             BufferedImage pokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
             JLabel picLabel = new JLabel(pokeIcon);
 
             JPopupMenu pokeInfoPopup = new JPopupMenu("Pokemon Info");
-            pokeInfoPopup.add(new JMenuItem(pokEntitiy.getName() + ", Nr: " + pokEntitiy.getNumber()));
-            pokeInfoPopup.add(new JMenuItem("Attack: " + pokEntitiy.getAttack()));
-            pokeInfoPopup.add(new JMenuItem("Defense: " + pokEntitiy.getDefense()));
-            pokeInfoPopup.add(new JMenuItem("Special Atk: " + pokEntitiy.getSpAttack()));
-            pokeInfoPopup.add(new JMenuItem("Special Def: " + pokEntitiy.getSpDefense()));
-            pokeInfoPopup.add(new JMenuItem("Speed: " + pokEntitiy.getSpeed()));
-            pokeInfoPopup.add(new JMenuItem("Health: " + pokEntitiy.getHealth()));
+            pokeInfoPopup.add(new JMenuItem(pokEntity.getName() + " - Nr: " + pokEntity.getNumber()));
+            pokeInfoPopup.add(new JMenuItem("Attack:" + pokEntity.getAttack()));
+            pokeInfoPopup.add(new JMenuItem("Defense:" + pokEntity.getDefense()));
+            pokeInfoPopup.add(new JMenuItem("Special Atk:" + pokEntity.getSpAttack()));
+            pokeInfoPopup.add(new JMenuItem("Special Def:" + pokEntity.getSpDefense()));
+            pokeInfoPopup.add(new JMenuItem("Speed:" + pokEntity.getSpeed()));
+            pokeInfoPopup.add(new JMenuItem("Health:" + pokEntity.getHealth()));
 
 
+            // Team Management
             picLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                            pokeInfoPopup.show(picLabel,e.getX(),e.getY());
-                        }
+                    pokeInfoPopup.show(picLabel,e.getX()+5,e.getY()+5);
+                }
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (!pokEntitiy.isChosenForTeaM()) {
-                        BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.ORANGE);
-                        picLabel.setIcon(new ImageIcon(coloredPokePicture));
-                        pokEntitiy.setChosenForTeaM(true);
-                        
+                    if (!pokEntity.isChosenForTeam()) {
+                        if (circleCount <=5) {
+                            BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.ORANGE);
+                            picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                            pokEntity.setChosenForTeam(true);
+
+                            switch(circleCount){
+                                case 0:
+                                    pokeBallOne.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallOne set");
+                                    break;
+                                case 1:
+                                    pokeBallTwo.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallTwo set");
+                                    break;
+                                case 2:
+                                    pokeBallThree.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallThree set");
+                                    break;
+                                case 3:
+                                    pokeBallFour.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    System.out.println("pokeBallFour set");
+                                    break;
+                                case 4:
+                                    pokeBallFive.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    break;
+                                case 5:
+                                    pokeBallSix.setIcon(new ImageIcon(imgHandler.paintCircleWithSprite(pokEntity)));
+                                    break;
+                            }
+                            circleCount++;
+                        }
                     }
-                    else{
+
+                    else if (pokEntity.isChosenForTeam()){
                         BufferedImage coloredPokePicture = imgHandler.generateIconComposition(attackScale, defenseScale, spAttackScale, spDefenseScale, speedScale, healthScale, Color.WHITE);
                         picLabel.setIcon(new ImageIcon(coloredPokePicture));
-                        pokEntitiy.setChosenForTeaM(false);
+                        pokEntity.setChosenForTeam(false);
+                        circleCount--;
+
+                        switch(circleCount){
+                            case 0:
+                                pokeBallOne.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallOne unset");
+                                break;
+                            case 1:
+                                pokeBallTwo.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallTwo unset");
+                                break;
+                            case 2:
+                                pokeBallThree.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 3:
+                                pokeBallFour.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 4:
+                                pokeBallFive.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                break;
+                            case 5:
+                                pokeBallSix.setIcon(new ImageIcon(imgHandler.getPokeBallImg()));
+                                System.out.println("pokeBallSix unset");
+                                break;
+                        }
                     }
                 }
             });
 
-
-
             panel.add(picLabel);
         }
-
-        /*
-        // filling grid layout matrix with dummy images using test arrays
-        for (int i=0; i<rows*cols; i++){
-            BufferedImage pokePicture = imgHandler.generateIconComposition(attackData[i],defenseData[i],spAttackData[i],
-                    spDefenseData[i],speedData[i],healthData[i]);
-
-            JLabel picLabel = new JLabel((new ImageIcon(pokePicture)));
-            panel.add(picLabel);
-        }*/
-
+*/
         JScrollPane scrollpane = new JScrollPane(panel);
-
-
-
         frame.add(menuPanel, BorderLayout.WEST);
         frame.add(scrollpane);
         frame.pack();
