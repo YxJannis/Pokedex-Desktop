@@ -12,6 +12,7 @@ public class DataReader {
     ArrayList<Pokemon> pokemon;
 
     public DataReader() {
+        readPokemon();
     }
 
     public ArrayList<Pokemon> getPokemon() {
