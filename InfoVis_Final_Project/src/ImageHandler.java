@@ -6,24 +6,36 @@ import java.io.IOException;
 
 public class ImageHandler {
 
-    static int imageBaseWidth = 40;
-    static int imageBaseHeight = 40;
+    private static int imageBaseWidth = 40;
+    private static int imageBaseHeight = 40;
 
-    BufferedImage attack = null;
-    BufferedImage defense = null;
-    BufferedImage spAttack = null;
-    BufferedImage spDefense = null;
-    BufferedImage speed = null;
-    BufferedImage health = null;
+    private BufferedImage attackImg = null;
+    private BufferedImage defenseImg = null;
+    private BufferedImage spAttackImg = null;
+    private BufferedImage spDefenseImg = null;
+    private BufferedImage speedImg = null;
+    private BufferedImage healthImg = null;
+
+    private BufferedImage sortHeaderImg = null;
+    private BufferedImage filterHeaderImg = null;
+    private BufferedImage yourTeamImg = null;
+    private BufferedImage circleImg = null;
+    private BufferedImage testButtonImg = null;
 
     public ImageHandler(){
         try {
-            attack = ImageIO.read(new File("src/images/Attack-40x40.png"));
-            defense = ImageIO.read(new File("src/images/Defense-40x40.png"));
-            spAttack = ImageIO.read(new File("src/images/SpAttack-40x40.png"));
-            spDefense = ImageIO.read(new File("src/images/SpDefense-40x40.png"));
-            speed = ImageIO.read(new File("src/images/Speed-40x40.png"));
-            health = ImageIO.read(new File("src/images/Health-40x40.png"));
+            attackImg = ImageIO.read(new File("src/images/Attack-40x40.png"));
+            defenseImg = ImageIO.read(new File("src/images/Defense-40x40.png"));
+            spAttackImg = ImageIO.read(new File("src/images/SpAttack-40x40.png"));
+            spDefenseImg = ImageIO.read(new File("src/images/SpDefense-40x40.png"));
+            speedImg = ImageIO.read(new File("src/images/Speed-40x40.png"));
+            healthImg = ImageIO.read(new File("src/images/Health-40x40.png"));
+            circleImg = ImageIO.read(new File("src/images/Circle.png"));
+            testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            sortHeaderImg = ImageIO.read(new File("src/images/sort-header.png"));
+            filterHeaderImg = ImageIO.read(new File("src/images/filter-header.png"));
+            yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,30 +43,20 @@ public class ImageHandler {
 
     public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
                                                  double spDefense_scale, double speed_scale, double health_scale){
-        BufferedImage attack_scaled = scaleImage(attack, attack_scale);
-        BufferedImage defense_scaled = scaleImage(defense, defense_scale);
-        BufferedImage spAttack_scaled = scaleImage(spAttack, spAttack_scale);
-        BufferedImage spDefense_scaled = scaleImage(spDefense, spDefense_scale);
-        BufferedImage speed_scaled = scaleImage(speed, speed_scale);
-        BufferedImage health_scaled = scaleImage(health, health_scale);
+        BufferedImage attack_scaled = scaleImage(attackImg, attack_scale);
+        BufferedImage defense_scaled = scaleImage(defenseImg, defense_scale);
+        BufferedImage spAttack_scaled = scaleImage(spAttackImg, spAttack_scale);
+        BufferedImage spDefense_scaled = scaleImage(spDefenseImg, spDefense_scale);
+        BufferedImage speed_scaled = scaleImage(speedImg, speed_scale);
+        BufferedImage health_scaled = scaleImage(healthImg, health_scale);
 
         BufferedImage finalImage = joinImages(attack_scaled, spAttack_scaled, speed_scaled, defense_scaled,spDefense_scaled, health_scaled);
 
         return drawBorder(finalImage);
     }
 
-    public static BufferedImage scaleImage2(BufferedImage imageToScale, int scaleFactor) {
-        BufferedImage scaledImage = null;
-        if (imageToScale != null) {
-            scaledImage = new BufferedImage(scaleFactor, scaleFactor, imageToScale.getType());
-            Graphics2D graphics2D = scaledImage.createGraphics();
-            graphics2D.drawImage(imageToScale, 0, 0, scaleFactor, scaleFactor, null);
-            graphics2D.dispose();
-        }
-        return scaledImage;
-    }
 
-    public static BufferedImage scaleImage(BufferedImage imageToScale, double scaleFactor){
+    public BufferedImage scaleImage(BufferedImage imageToScale, double scaleFactor){
         // scale factor can range from 0.1(min) to 1.0 (max)
         // min factor maybe has to be changed
         BufferedImage scaledImage = null;
@@ -68,10 +70,10 @@ public class ImageHandler {
             g2.dispose();
         }
         return scaledImage;
-
     }
 
-    public static BufferedImage joinImages(BufferedImage img1, BufferedImage img2, BufferedImage img3,
+
+    private static BufferedImage joinImages(BufferedImage img1, BufferedImage img2, BufferedImage img3,
                                            BufferedImage img4, BufferedImage img5, BufferedImage img6){
         int offset = 0;
         int width = imageBaseWidth*3+offset;
@@ -101,7 +103,7 @@ public class ImageHandler {
     }
 
     // Drawing rectangle around image
-    public static BufferedImage drawBorder(BufferedImage image){
+    private BufferedImage drawBorder(BufferedImage image){
         if (image != null) {
             Graphics2D g = (Graphics2D) image.getGraphics();
             g.setStroke(new BasicStroke(2));
@@ -110,5 +112,60 @@ public class ImageHandler {
         }
         return image;
     }
+
+
+    public static int getImageBaseWidth() {
+        return imageBaseWidth;
+    }
+
+    public static int getImageBaseHeight() {
+        return imageBaseHeight;
+    }
+
+    public BufferedImage getAttackImg() {
+        return attackImg;
+    }
+
+    public BufferedImage getDefenseImg() {
+        return defenseImg;
+    }
+
+    public BufferedImage getSpAttackImg() {
+        return spAttackImg;
+    }
+
+    public BufferedImage getSpDefenseImg() {
+        return spDefenseImg;
+    }
+
+    public BufferedImage getSpeedImg() {
+        return speedImg;
+    }
+
+    public BufferedImage getHealthImg() {
+        return healthImg;
+    }
+
+    public BufferedImage getSortHeaderImg() {
+        return sortHeaderImg;
+    }
+
+    public BufferedImage getFilterHeaderImg() {
+        return filterHeaderImg;
+    }
+
+    public BufferedImage getYourTeamImg() {
+        return yourTeamImg;
+    }
+
+    public BufferedImage getCircleImg() {
+        return circleImg;
+    }
+
+    public BufferedImage getTestButtonImg() {
+        return testButtonImg;
+    }
+
+
 }
 
