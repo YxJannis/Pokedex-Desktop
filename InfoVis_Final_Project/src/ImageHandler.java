@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class ImageHandler {
 
-    private static int imageBaseWidth = 40;
-    private static int imageBaseHeight = 40;
+    private static final int imageBaseWidth = 40;
+    private static final int imageBaseHeight = 40;
 
     // attribute images
     private BufferedImage attackImg = null;
@@ -43,6 +43,7 @@ public class ImageHandler {
     private BufferedImage generationFilterButtonImg = null;
     private BufferedImage typeFilterButtonImg = null;
     private BufferedImage isLegendaryFilterButtonImg = null;
+    private BufferedImage resetFilterButtonImg = null;
 
 
 
@@ -71,7 +72,8 @@ public class ImageHandler {
 
             generationFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
             typeFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            isLegendaryFilterButtonImg= ImageIO.read(new File("src/images/test-button.png"));
+            isLegendaryFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            resetFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,14 +152,6 @@ public class ImageHandler {
     }
 
 
-    public static int getImageBaseWidth() {
-        return imageBaseWidth;
-    }
-
-    public static int getImageBaseHeight() {
-        return imageBaseHeight;
-    }
-
     public BufferedImage getAttackImg() {
         return attackImg;
     }
@@ -198,10 +192,6 @@ public class ImageHandler {
         return pokeBallImg;
     }
 
-    public BufferedImage getTestButtonImg() {
-        return testButtonImg;
-    }
-
     public BufferedImage getNumberSortButtonImg() {
         return numberSortButtonImg;
     }
@@ -240,6 +230,10 @@ public class ImageHandler {
 
     public BufferedImage getIsLegendaryFilterButtonImg() {
         return isLegendaryFilterButtonImg;
+    }
+
+    public BufferedImage getResetFilterButtonImg() {
+        return resetFilterButtonImg;
     }
 }
 

@@ -88,10 +88,11 @@ public class DataReader {
         }
     }
 
+    /*
     public static void main(String[] args) {
-        //DataReader reader = new DataReader();
+        DataReader reader = new DataReader();
 
-        //reader.readPokemon();
-        //reader.readSprites();
-    }
+        reader.readPokemon();
+        reader.readSprites();
+    }*/
 }

@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -96,9 +94,7 @@ public class GUI extends JFrame{
         sortBy = "number";
 
         circleCount = 0;
-        //rows = 28;
         rows = (int)Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
-        //cols = 28;
         cols = (int)Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
 
         picLabelMap = new LinkedHashMap<>();
@@ -147,7 +143,9 @@ public class GUI extends JFrame{
         JScrollPane scrollpane = new JScrollPane(mainPanel);
         add(menuPanel, BorderLayout.WEST);
         add(scrollpane);
-        pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds(0,0,screenSize.width,screenSize.height);
+        //pack();
         setVisible(true);
     }
 
@@ -171,7 +169,7 @@ public class GUI extends JFrame{
         sortBySpDefenseBtn = new JButton(new ImageIcon(imgHandler.getSpDefenseSortButtonImg()));
         sortBySpeedBtn = new JButton(new ImageIcon(imgHandler.getSpeedSortButtonImg()));
         sortByHealthBtn = new JButton(new ImageIcon(imgHandler.getHealthSortButtonImg()));
-        resetFilterBtn = new JButton(new ImageIcon(imgHandler.getTestButtonImg()));
+        resetFilterBtn = new JButton(new ImageIcon(imgHandler.getResetFilterButtonImg()));
 
         sortByNumberBtn.setBorder(BorderFactory.createEmptyBorder());
         sortByNumberBtn.setContentAreaFilled(false);
@@ -502,32 +500,23 @@ public class GUI extends JFrame{
     }
 
     private void handleGenerationFilters(JMenuItem menuItem, int generation){
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dataProvider.filterByGeneration(generation);
-                fillDataGrid();
-            }
+        menuItem.addActionListener(e -> {
+            dataProvider.filterByGeneration(generation);
+            fillDataGrid();
         });
     }
 
     private void handleTypeFilters(JMenuItem menuItem, PokeType type){
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dataProvider.filterByType(type);
-                fillDataGrid();
-            }
+        menuItem.addActionListener(e -> {
+            dataProvider.filterByType(type);
+            fillDataGrid();
         });
     }
 
     private void handleIsLegendaryFilters(JMenuItem menuItem, boolean isLegendary){
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dataProvider.filterByIsLegendary(isLegendary);
-                fillDataGrid();
-            }
+        menuItem.addActionListener(e -> {
+            dataProvider.filterByIsLegendary(isLegendary);
+            fillDataGrid();
         });
     }
 
@@ -556,12 +545,9 @@ public class GUI extends JFrame{
         handleIsLegendaryFilters(legendaryTrue, true);
         handleIsLegendaryFilters(legendaryFalse, false);
 
-        resetFilterBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dataProvider.resetFilter();
-                fillDataGrid();
-            }
+        resetFilterBtn.addActionListener(e -> {
+            dataProvider.resetFilter();
+            fillDataGrid();
         });
 
     }

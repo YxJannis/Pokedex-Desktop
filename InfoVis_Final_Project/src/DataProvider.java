@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * handles and provides data for usage in GUI
@@ -11,7 +10,7 @@ import java.util.HashSet;
 public class DataProvider {
 
     private ArrayList<Pokemon> pokemon;
-    private ArrayList<Pokemon> allPokemon;
+    private final ArrayList<Pokemon> allPokemon;
 
 
     public DataProvider(){
@@ -144,8 +143,7 @@ public class DataProvider {
             attack = 5;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((attack-4)/10.7)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((attack-4)/10.7)-1)*0.05+baseValue;
     }
 
     public static double getDefenseScale(int defense){
@@ -156,8 +154,7 @@ public class DataProvider {
             defense = 5;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((defense-4)/13.3)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((defense-4)/13.3)-1)*0.05+baseValue;
     }
 
     public static double getSpAttackScale(int spAttack){
@@ -168,8 +165,7 @@ public class DataProvider {
             spAttack = 10;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((spAttack-9)/10.9)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((spAttack-9)/10.9)-1)*0.05+baseValue;
     }
 
     public static double getSpDefenseScale(int spDefense){
@@ -180,8 +176,7 @@ public class DataProvider {
             spDefense = 20;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((spDefense-19)/12.5)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((spDefense-19)/12.5)-1)*0.05+baseValue;
     }
 
     public static double getSpeedScale(int speed){
@@ -192,8 +187,7 @@ public class DataProvider {
             speed = 5;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((speed-4)/10.4)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((speed-4)/10.4)-1)*0.05+baseValue;
     }
 
     public static double getHealthScale(int health){
@@ -204,8 +198,7 @@ public class DataProvider {
             health = 1;
         }
         double baseValue = 0.2;
-        double scale = (Math.ceil((health)/15.0)-1)*0.05+baseValue;
-        return scale;
+        return (Math.ceil((health)/15.0)-1)*0.05+baseValue;
     }
 
     public ArrayList<Pokemon> getPokemon() {
@@ -213,6 +206,7 @@ public class DataProvider {
     }
 
     // Main method for data analysis and testing
+    /*
     public static void main(String[] args) {
         DataProvider p = new DataProvider();
 
@@ -241,5 +235,5 @@ public class DataProvider {
         System.out.println(typeSet);
 
 
-    }
+    }*/
 }
