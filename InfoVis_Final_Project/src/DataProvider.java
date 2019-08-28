@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class DataProvider {
     private ArrayList<Pokemon> pokemon;
@@ -13,52 +12,64 @@ public class DataProvider {
 
     public void sortByAttribute(String attribute){
         switch(attribute){
+            case "number":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getNumber() == o2.getNumber()){
+                        return 0;
+                    }
+                    return o1.getNumber() < o2.getNumber() ? -1 : 1;
+                });
+                break;
             case "attack":
+                System.out.println("Sorting by attack in DataProvider");
                 Collections.sort(pokemon, (o1, o2) -> {
                     if (o1.getAttack() == o2.getAttack()){
                         return 0;
                     }
                     return o1.getAttack() < o2.getAttack() ? -1 : 1;
                 });
-                for (int i = 0; i < pokemon.size(); i++) {
 
-                    System.out.println(pokemon.get(i).getAttack());
-                }
                 break;
             case "defense":
-                Collections.sort(pokemon, new Comparator<Pokemon>() {
-                    @Override
-                    public int compare(Pokemon o1, Pokemon o2) {
-                        if (o1.getDefense() == o2.getDefense()){
-                            return 0;
-                        }
-                        return o1.getDefense() < o2.getDefense() ? -1 : 1;
+                System.out.println("Sorting by defense in DataProvider");
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getDefense() == o2.getDefense()){
+                        return 0;
                     }
+                    return o1.getDefense() < o2.getDefense() ? -1 : 1;
                 });
                 break;
             case "spAttack":
-                Collections.sort(pokemon, new Comparator<Pokemon>() {
-                    @Override
-                    public int compare(Pokemon o1, Pokemon o2) {
-                        if (o1.getSpAttack() == o2.getSpAttack()){
-                            return 0;
-                        }
-                        return o1.getSpAttack() < o2.getSpAttack() ? -1 : 1;
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpAttack() == o2.getSpAttack()){
+                        return 0;
                     }
+                    return o1.getSpAttack() < o2.getSpAttack() ? -1 : 1;
                 });
                 break;
-            case "number":
-                Collections.sort(pokemon, new Comparator<Pokemon>() {
-                    @Override
-                    public int compare(Pokemon o1, Pokemon o2) {
-                        if (o1.getNumber() == o2.getNumber()){
-                            return 0;
-                        }
-                        return o1.getNumber() < o2.getNumber() ? -1 : 1;
+            case "spDefense":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpDefense() == o2.getSpDefense()){
+                        return 0;
                     }
+                    return o1.getSpDefense() < o2.getSpDefense() ? -1 : 1;
                 });
                 break;
-
+            case "speed":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpeed() == o2.getSpeed()){
+                        return 0;
+                    }
+                    return o1.getSpeed() < o2.getSpeed() ? -1 : 1;
+                });
+                break;
+            case "health":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getHealth() == o2.getHealth()){
+                        return 0;
+                    }
+                    return o1.getHealth() < o2.getHealth() ? -1 : 1;
+                });
         }
     }
 

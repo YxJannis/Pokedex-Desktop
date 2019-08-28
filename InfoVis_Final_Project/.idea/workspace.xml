@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5881191f-2ead-4fa8-8140-d167bd9891e3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/InfoVis_Final_Project/GUI$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/InfoVis_Final_Project/GUI$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/InfoVis_Final_Project/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/InfoVis_Final_Project/GUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pokemon.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,22 +20,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="402" column="56" selection-start-line="402" selection-start-column="56" selection-end-line="402" selection-end-column="56" />
+            <state relative-caret-position="-1851">
+              <caret line="154" column="61" selection-start-line="154" selection-start-column="61" selection-end-line="154" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2070#2071#0" expanded="true" />
-                <element signature="e#2160#2161#0" expanded="true" />
-                <element signature="e#11054#11218#0" expanded="true" />
-                <element signature="e#11217#11218#0" expanded="true" />
-                <element signature="e#11725#11883#0" expanded="true" />
-                <element signature="e#11882#11883#0" expanded="true" />
-                <element signature="e#12359#12522#0" expanded="true" />
-                <element signature="e#12521#12522#0" expanded="true" />
-                <element signature="e#13727#19536#1" />
+                <element signature="method#fillGridWithPokemon#0;class#GUI#0" />
+                <element signature="e#2388#2389#0" expanded="true" />
+                <element signature="e#2478#2479#0" expanded="true" />
+                <element signature="e#13950#13951#0" expanded="true" />
+                <element signature="e#13985#13986#0" expanded="true" />
+                <element signature="e#14168#20065#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GUI2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-33">
+              <caret line="146" column="39" selection-start-line="146" selection-start-column="39" selection-end-line="146" selection-end-column="39" />
+              <folding>
+                <element signature="e#1738#1739#0" expanded="true" />
+                <element signature="e#1760#1761#0" expanded="true" />
+                <element signature="method#initFilterPanel#0;class#GUI2#0" />
+                <element signature="e#5927#6091#0" expanded="true" />
+                <element signature="e#6090#6091#0" expanded="true" />
+                <element signature="e#6568#6726#0" expanded="true" />
+                <element signature="e#6725#6726#0" expanded="true" />
+                <element signature="e#7183#7346#0" expanded="true" />
+                <element signature="e#7345#7346#0" expanded="true" />
+                <element signature="method#initTeamPanel#0;class#GUI2#0" />
+                <element signature="e#9922#13941#0" />
+                <element signature="e#10069#10070#0" expanded="true" />
+                <element signature="e#10151#10152#0" expanded="true" />
+                <element signature="e#15743#15744#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,14 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Pokemon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="34" lean-forward="true" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-              <folding>
-                <element signature="e#2826#2827#0" expanded="true" />
-                <element signature="e#2862#2863#0" expanded="true" />
-                <element signature="e#2921#2922#0" expanded="true" />
-                <element signature="e#2971#2972#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="697">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
             </state>
           </provider>
         </entry>
@@ -59,12 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DataReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
-              <folding>
-                <element signature="e#364#365#0" expanded="true" />
-                <element signature="e#394#395#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="224">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
             </state>
           </provider>
         </entry>
@@ -72,17 +84,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DataProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+            <state relative-caret-position="288">
+              <caret line="29" column="19" lean-forward="true" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#getAttackScale#0;class#DataProvider#0" />
                 <element signature="method#getDefenseScale#0;class#DataProvider#0" />
-                <element signature="method#getAttackScale#1;class#DataProvider#0" />
-                <element signature="method#getDefenseScale#1;class#DataProvider#0" />
-                <element signature="method#getAttackScale#1;class#DataProvider#0" />
-                <element signature="method#getDefenseScale#1;class#DataProvider#0" />
-                <element signature="e#4136#4137#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,14 +98,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ImageHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-161">
+            <state relative-caret-position="714">
               <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5981#5982#0" expanded="true" />
-                <element signature="e#6019#6020#0" expanded="true" />
-                <element signature="e#6188#6189#0" expanded="true" />
-                <element signature="e#6222#6223#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -122,10 +125,11 @@
         <option value="$PROJECT_DIR$/src/ImageProcessor.java" />
         <option value="$PROJECT_DIR$/src/GridLayoutTest.java" />
         <option value="$PROJECT_DIR$/src/Pokemon.java" />
-        <option value="$PROJECT_DIR$/src/DataReader.java" />
         <option value="$PROJECT_DIR$/src/ImageHandler.java" />
-        <option value="$PROJECT_DIR$/src/DataProvider.java" />
         <option value="$PROJECT_DIR$/src/GUI.java" />
+        <option value="$PROJECT_DIR$/src/DataReader.java" />
+        <option value="$PROJECT_DIR$/src/GUI2.java" />
+        <option value="$PROJECT_DIR$/src/DataProvider.java" />
       </list>
     </option>
   </component>
@@ -143,7 +147,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,6 +163,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -170,6 +174,11 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -183,7 +192,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GUI">
+  <component name="RunManager" selected="Application.GUI2">
     <configuration name="DataProvider" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DataProvider" />
       <module name="InfoVis_Final_Project" />
@@ -205,13 +214,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI" />
+      <module name="InfoVis_Final_Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.GUI" />
       <item itemvalue="Application.DataReader" />
       <item itemvalue="Application.DataProvider" />
+      <item itemvalue="Application.GUI2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GUI2" />
         <item itemvalue="Application.GUI" />
         <item itemvalue="Application.DataProvider" />
         <item itemvalue="Application.DataReader" />
@@ -233,8 +251,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993395" visible="true" weight="0.12100213" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993395" visible="true" weight="0.122068234" />
       <window_info id="Structure" order="1" sideWeight="0.5006605" side_tool="true" weight="0.12100213" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -243,8 +262,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2751896" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2751896" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -271,76 +290,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataReader.java">
+    <entry file="file://$PROJECT_DIR$/src/ImageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+        <state relative-caret-position="714">
+          <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
           <folding>
-            <element signature="e#364#365#0" expanded="true" />
-            <element signature="e#394#395#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Pokemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="34" lean-forward="true" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="e#2826#2827#0" expanded="true" />
-            <element signature="e#2862#2863#0" expanded="true" />
-            <element signature="e#2921#2922#0" expanded="true" />
-            <element signature="e#2971#2972#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="697">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImageHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/DataReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161">
-          <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+        <state relative-caret-position="224">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1851">
+          <caret line="154" column="61" selection-start-line="154" selection-start-column="61" selection-end-line="154" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5981#5982#0" expanded="true" />
-            <element signature="e#6019#6020#0" expanded="true" />
-            <element signature="e#6188#6189#0" expanded="true" />
-            <element signature="e#6222#6223#0" expanded="true" />
+            <element signature="method#fillGridWithPokemon#0;class#GUI#0" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2478#2479#0" expanded="true" />
+            <element signature="e#13950#13951#0" expanded="true" />
+            <element signature="e#13985#13986#0" expanded="true" />
+            <element signature="e#14168#20065#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DataProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+        <state relative-caret-position="288">
+          <caret line="29" column="19" lean-forward="true" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getAttackScale#0;class#DataProvider#0" />
             <element signature="method#getDefenseScale#0;class#DataProvider#0" />
-            <element signature="method#getAttackScale#1;class#DataProvider#0" />
-            <element signature="method#getDefenseScale#1;class#DataProvider#0" />
-            <element signature="method#getAttackScale#1;class#DataProvider#0" />
-            <element signature="method#getDefenseScale#1;class#DataProvider#0" />
-            <element signature="e#4136#4137#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/GUI2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="402" column="56" selection-start-line="402" selection-start-column="56" selection-end-line="402" selection-end-column="56" />
+        <state relative-caret-position="-33">
+          <caret line="146" column="39" selection-start-line="146" selection-start-column="39" selection-end-line="146" selection-end-column="39" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2070#2071#0" expanded="true" />
-            <element signature="e#2160#2161#0" expanded="true" />
-            <element signature="e#11054#11218#0" expanded="true" />
-            <element signature="e#11217#11218#0" expanded="true" />
-            <element signature="e#11725#11883#0" expanded="true" />
-            <element signature="e#11882#11883#0" expanded="true" />
-            <element signature="e#12359#12522#0" expanded="true" />
-            <element signature="e#12521#12522#0" expanded="true" />
-            <element signature="e#13727#19536#1" />
+            <element signature="e#1738#1739#0" expanded="true" />
+            <element signature="e#1760#1761#0" expanded="true" />
+            <element signature="method#initFilterPanel#0;class#GUI2#0" />
+            <element signature="e#5927#6091#0" expanded="true" />
+            <element signature="e#6090#6091#0" expanded="true" />
+            <element signature="e#6568#6726#0" expanded="true" />
+            <element signature="e#6725#6726#0" expanded="true" />
+            <element signature="e#7183#7346#0" expanded="true" />
+            <element signature="e#7345#7346#0" expanded="true" />
+            <element signature="method#initTeamPanel#0;class#GUI2#0" />
+            <element signature="e#9922#13941#0" />
+            <element signature="e#10069#10070#0" expanded="true" />
+            <element signature="e#10151#10152#0" expanded="true" />
+            <element signature="e#15743#15744#0" expanded="true" />
           </folding>
         </state>
       </provider>
