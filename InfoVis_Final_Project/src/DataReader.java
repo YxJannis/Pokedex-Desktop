@@ -36,8 +36,16 @@ public class DataReader {
                         + attributes[36] + " " + attributes[37] + " " + attributes[19] + " " + attributes[25] + " " +
                         attributes[33] + " " + attributes[34] + " " + attributes[35] + " " + attributes[28]);
                 */
-                Pokemon p = new Pokemon();
 
+                Type type2 = null;
+                if(!attributes[37].isEmpty()){
+                    type2 = Type.valueOf(attributes[37].toUpperCase());
+                }
+
+                Pokemon p = new Pokemon(Integer.parseInt(attributes[19]),Integer.parseInt(attributes[25]),Integer.parseInt(attributes[33]),Integer.parseInt(attributes[34]),Integer.parseInt(attributes[35]),Integer.parseInt(attributes[28]),
+                        attributes[30], Integer.parseInt(attributes[32]),Integer.parseInt(attributes[39]),"1".equals(attributes[40]),Type.valueOf(attributes[36].toUpperCase()), type2);
+
+                /*
                 p.setNumber(Integer.parseInt(attributes[32]));
                 p.setName(attributes[30]);
                 p.setGeneration(Integer.parseInt(attributes[39]));
@@ -53,6 +61,7 @@ public class DataReader {
                 p.setSpDefense(Integer.parseInt(attributes[34]));
                 p.setSpeed(Integer.parseInt(attributes[35]));
                 p.setHealth(Integer.parseInt(attributes[28]));
+                */
 
                 pokemon.add(p);
                 line = reader.readLine();

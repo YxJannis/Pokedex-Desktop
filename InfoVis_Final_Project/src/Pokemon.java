@@ -9,6 +9,13 @@ public class Pokemon {
     int speed;
     int health;
 
+    double attackScale;
+    double defenseScale;
+    double spAttackScale;
+    double spDefenseScale;
+    double speedScale;
+    double healthScale;
+
     String name;
     int number;
     int generation;
@@ -22,7 +29,7 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(int attack, int defense, int spAttack, int spDefense, int speed, int health, String name, int number, boolean legendary, Type type1, Type type2, BufferedImage sprite) {
+    public Pokemon(int attack, int defense, int spAttack, int spDefense, int speed, int health, String name, int number, int generation, boolean legendary, Type type1, Type type2) {
         this.attack = attack;
         this.defense = defense;
         this.spAttack = spAttack;
@@ -31,10 +38,16 @@ public class Pokemon {
         this.health = health;
         this.name = name;
         this.number = number;
+        this.generation = generation;
         this.legendary = legendary;
         this.type1 = type1;
         this.type2 = type2;
-        this.sprite = sprite;
+        this.attackScale = DataProvider.getAttackScale(attack);
+        this.spAttackScale = DataProvider.getSpAttackScale(spAttack);
+        this.defenseScale = DataProvider.getDefenseScale(defense);
+        this.spDefenseScale = DataProvider.getSpDefenseScale(spDefense);
+        this.speedScale = DataProvider.getSpeedScale(speed);
+        this.healthScale = DataProvider.getHealthScale(health);
     }
 
     public int getAttack() {
@@ -147,5 +160,53 @@ public class Pokemon {
 
     public void setChosenForTeam(boolean chosenForTeam) {
         this.chosenForTeam = chosenForTeam;
+    }
+
+    public double getAttackScale() {
+        return attackScale;
+    }
+
+    public double getDefenseScale() {
+        return defenseScale;
+    }
+
+    public double getSpAttackScale() {
+        return spAttackScale;
+    }
+
+    public double getSpDefenseScale() {
+        return spDefenseScale;
+    }
+
+    public double getSpeedScale() {
+        return speedScale;
+    }
+
+    public double getHealthScale() {
+        return healthScale;
+    }
+
+    public void setAttackScale(double attackScale) {
+        this.attackScale = attackScale;
+    }
+
+    public void setDefenseScale(double defenseScale) {
+        this.defenseScale = defenseScale;
+    }
+
+    public void setSpAttackScale(double spAttackScale) {
+        this.spAttackScale = spAttackScale;
+    }
+
+    public void setSpDefenseScale(double spDefenseScale) {
+        this.spDefenseScale = spDefenseScale;
+    }
+
+    public void setSpeedScale(double speedScale) {
+        this.speedScale = speedScale;
+    }
+
+    public void setHealthScale(double healthScale) {
+        this.healthScale = healthScale;
     }
 }

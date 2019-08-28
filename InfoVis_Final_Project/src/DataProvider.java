@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class DataProvider {
     private ArrayList<Pokemon> pokemon;
@@ -10,14 +11,17 @@ public class DataProvider {
         this.pokemon = dataReader.getPokemon();
     }
 
-    public void sortByAttribute(String attribute){
+    public void sortByAttribute(String attribute, boolean descending){
         switch(attribute){
             case "number":
                 Collections.sort(pokemon, (o1, o2) -> {
                     if (o1.getNumber() == o2.getNumber()){
                         return 0;
                     }
-                    return o1.getNumber() < o2.getNumber() ? -1 : 1;
+                    if (descending)
+                        return o1.getNumber() > o2.getNumber() ? -1 : 1;
+                    else
+                        return o1.getNumber() < o2.getNumber() ? -1 : 1;
                 });
                 break;
             case "attack":
@@ -26,7 +30,10 @@ public class DataProvider {
                     if (o1.getAttack() == o2.getAttack()){
                         return 0;
                     }
-                    return o1.getAttack() < o2.getAttack() ? -1 : 1;
+                    if (descending)
+                        return o1.getAttack() > o2.getAttack() ? -1 : 1;
+                    else
+                        return o1.getAttack() < o2.getAttack() ? -1 : 1;
                 });
 
                 break;
@@ -36,7 +43,10 @@ public class DataProvider {
                     if (o1.getDefense() == o2.getDefense()){
                         return 0;
                     }
-                    return o1.getDefense() < o2.getDefense() ? -1 : 1;
+                    if (descending)
+                        return o1.getDefense() > o2.getDefense() ? -1 : 1;
+                    else
+                        return o1.getDefense() < o2.getDefense() ? -1 : 1;
                 });
                 break;
             case "spAttack":
@@ -44,7 +54,10 @@ public class DataProvider {
                     if (o1.getSpAttack() == o2.getSpAttack()){
                         return 0;
                     }
-                    return o1.getSpAttack() < o2.getSpAttack() ? -1 : 1;
+                    if (descending)
+                        return o1.getSpAttack() > o2.getSpAttack() ? -1 : 1;
+                    else
+                        return o1.getSpAttack() < o2.getSpAttack() ? -1 : 1;
                 });
                 break;
             case "spDefense":
@@ -52,7 +65,10 @@ public class DataProvider {
                     if (o1.getSpDefense() == o2.getSpDefense()){
                         return 0;
                     }
-                    return o1.getSpDefense() < o2.getSpDefense() ? -1 : 1;
+                    if (descending)
+                        return o1.getSpDefense() > o2.getSpDefense() ? -1 : 1;
+                    else
+                        return o1.getSpDefense() < o2.getSpDefense() ? -1 : 1;
                 });
                 break;
             case "speed":
@@ -60,7 +76,10 @@ public class DataProvider {
                     if (o1.getSpeed() == o2.getSpeed()){
                         return 0;
                     }
-                    return o1.getSpeed() < o2.getSpeed() ? -1 : 1;
+                    if (descending)
+                        return o1.getSpeed() > o2.getSpeed() ? -1 : 1;
+                    else
+                        return o1.getSpeed() < o2.getSpeed() ? -1 : 1;
                 });
                 break;
             case "health":
@@ -68,12 +87,15 @@ public class DataProvider {
                     if (o1.getHealth() == o2.getHealth()){
                         return 0;
                     }
-                    return o1.getHealth() < o2.getHealth() ? -1 : 1;
+                    if (descending)
+                        return o1.getHealth() > o2.getHealth() ? -1 : 1;
+                    else
+                        return o1.getHealth() < o2.getHealth() ? -1 : 1;
                 });
         }
     }
 
-    public double getAttackScale(int attack){
+    public static double getAttackScale(int attack){
         if (attack > 185){
             attack = 185;
         }
@@ -85,7 +107,7 @@ public class DataProvider {
         return scale;
     }
 
-    public double getDefenseScale(int defense){
+    public static double getDefenseScale(int defense){
         if (defense > 230){
             defense = 230;
         }
@@ -97,7 +119,7 @@ public class DataProvider {
         return scale;
     }
 
-    public double getSpAttackScale(int spAttack){
+    public static double getSpAttackScale(int spAttack){
         if (spAttack > 194){
             spAttack = 194;
         }
@@ -109,7 +131,7 @@ public class DataProvider {
         return scale;
     }
 
-    public double getSpDefenseScale(int spDefense){
+    public static double getSpDefenseScale(int spDefense){
         if (spDefense > 230){
             spDefense = 230;
         }
@@ -121,7 +143,7 @@ public class DataProvider {
         return scale;
     }
 
-    public double getSpeedScale(int speed){
+    public static double getSpeedScale(int speed){
         if (speed > 180){
             speed = 180;
         }
@@ -133,7 +155,7 @@ public class DataProvider {
         return scale;
     }
 
-    public double getHealthScale(int health){
+    public static double getHealthScale(int health){
         if (health > 255){
             health = 255;
         }
@@ -159,6 +181,8 @@ public class DataProvider {
         ArrayList<Integer> spDefense = new ArrayList<>();
         ArrayList<Integer> speed = new ArrayList<>();
         ArrayList<Integer> health = new ArrayList<>();
+        ArrayList<String> types = new ArrayList<>();
+        HashSet<String> typeSet = new HashSet<>();
 
         for (int i = 0; i < p.pokemon.size(); i++) {
             attack.add(p.pokemon.get(i).attack);
@@ -167,14 +191,13 @@ public class DataProvider {
             spDefense.add(p.pokemon.get(i).spDefense);
             speed.add(p.pokemon.get(i).speed);
             health.add(p.pokemon.get(i).health);
+            typeSet.add(p.pokemon.get(i).getType1().toString());
+            if (!(p.pokemon.get(i).getType2() == null)) {
+                typeSet.add(p.pokemon.get(i).getType2().toString());
+            }
         }
 
-        Collections.sort(attack);
-        Collections.sort(defense);
-        Collections.sort(spAttack);
-        Collections.sort(spDefense);
-        Collections.sort(speed);
-        Collections.sort(health);
+        System.out.println(typeSet);
 
 
     }

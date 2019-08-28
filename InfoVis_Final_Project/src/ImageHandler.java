@@ -9,6 +9,7 @@ public class ImageHandler {
     private static int imageBaseWidth = 40;
     private static int imageBaseHeight = 40;
 
+    // attribute images
     private BufferedImage attackImg = null;
     private BufferedImage defenseImg = null;
     private BufferedImage spAttackImg = null;
@@ -16,12 +17,28 @@ public class ImageHandler {
     private BufferedImage speedImg = null;
     private BufferedImage healthImg = null;
 
+    // menu images
     private BufferedImage sortHeaderImg = null;
     private BufferedImage filterHeaderImg = null;
     private BufferedImage yourTeamImg = null;
     private BufferedImage pokeBallImg = null;
+
+    // sort button images
     private BufferedImage testButtonImg = null;
-    private BufferedImage testSpriteImg = null;
+    private BufferedImage numberSortButtonImg = null;
+    private BufferedImage attackSortButtonImg = null;
+    private BufferedImage spAttackSortButtonImg = null;
+    private BufferedImage defenseSortButtonImg = null;
+    private BufferedImage spDefenseSortButtonImg = null;
+    private BufferedImage speedSortButtonImg = null;
+    private BufferedImage healthSortButtonImg = null;
+
+    // filter button images
+    private BufferedImage generationFilterButtonImg = null;
+    private BufferedImage typeFilterButtonImg = null;
+    private BufferedImage isLegendaryFilterButtonImg = null;
+
+
 
     public ImageHandler(){
         try {
@@ -31,36 +48,38 @@ public class ImageHandler {
             spDefenseImg = ImageIO.read(new File("src/images/SpDefense-40x40.png"));
             speedImg = ImageIO.read(new File("src/images/Speed-40x40.png"));
             healthImg = ImageIO.read(new File("src/images/Health-40x40.png"));
-            pokeBallImg = ImageIO.read(new File("src/images/pokeball-1.png"));
-            testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+
             sortHeaderImg = ImageIO.read(new File("src/images/sort-header.png"));
             filterHeaderImg = ImageIO.read(new File("src/images/filter-header.png"));
+            pokeBallImg = ImageIO.read(new File("src/images/pokeball-1.png"));
             yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
-            testSpriteImg = ImageIO.read(new File("src/images/test-sprite.png"));
+
+            testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            numberSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            attackSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            spAttackSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            defenseSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            spDefenseSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            speedSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            healthSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+
+            generationFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            typeFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            isLegendaryFilterButtonImg= ImageIO.read(new File("src/images/test-button.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public BufferedImage paintCircleWithSprite(Pokemon pokemon){
-        //BufferedImage tempCircle = pokeBallImg;
-        BufferedImage spriteImg = pokemon.getSprite();
-        //BufferedImage spriteImg = scaleImage(pokemon.getSprite(),0.75);
-        //Graphics2D g2d = tempCircle.createGraphics();
-        //g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-        //g2d.drawImage(spriteImg,2,3,null);
-        return spriteImg;
-    }
-
     public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
                                                  double spDefense_scale, double speed_scale, double health_scale, Color backgroundColor){
-        BufferedImage attack_scaled = scaleImage(attackImg, attack_scale);
-        BufferedImage defense_scaled = scaleImage(defenseImg, defense_scale);
-        BufferedImage spAttack_scaled = scaleImage(spAttackImg, spAttack_scale);
-        BufferedImage spDefense_scaled = scaleImage(spDefenseImg, spDefense_scale);
-        BufferedImage speed_scaled = scaleImage(speedImg, speed_scale);
-        BufferedImage health_scaled = scaleImage(healthImg, health_scale);
+        BufferedImage attack_scaled = scaleImage(getAttackImg(), attack_scale);
+        BufferedImage defense_scaled = scaleImage(getDefenseImg(), defense_scale);
+        BufferedImage spAttack_scaled = scaleImage(getSpAttackImg(), spAttack_scale);
+        BufferedImage spDefense_scaled = scaleImage(getSpDefenseImg(), spDefense_scale);
+        BufferedImage speed_scaled = scaleImage(getSpeedImg(), speed_scale);
+        BufferedImage health_scaled = scaleImage(getHealthImg(), health_scale);
 
         BufferedImage finalImage = joinImages(attack_scaled, spAttack_scaled, speed_scaled, defense_scaled,spDefense_scaled, health_scaled, backgroundColor);
 
@@ -178,6 +197,44 @@ public class ImageHandler {
         return testButtonImg;
     }
 
+    public BufferedImage getNumberSortButtonImg() {
+        return numberSortButtonImg;
+    }
 
+    public BufferedImage getAttackSortButtonImg() {
+        return attackSortButtonImg;
+    }
+
+    public BufferedImage getSpAttackSortButtonImg() {
+        return spAttackSortButtonImg;
+    }
+
+    public BufferedImage getDefenseSortButtonImg() {
+        return defenseSortButtonImg;
+    }
+
+    public BufferedImage getSpDefenseSortButtonImg() {
+        return spDefenseSortButtonImg;
+    }
+
+    public BufferedImage getSpeedSortButtonImg() {
+        return speedSortButtonImg;
+    }
+
+    public BufferedImage getHealthSortButtonImg() {
+        return healthSortButtonImg;
+    }
+
+    public BufferedImage getGenerationFilterButtonImg() {
+        return generationFilterButtonImg;
+    }
+
+    public BufferedImage getTypeFilterButtonImg() {
+        return typeFilterButtonImg;
+    }
+
+    public BufferedImage getIsLegendaryFilterButtonImg() {
+        return isLegendaryFilterButtonImg;
+    }
 }
 
