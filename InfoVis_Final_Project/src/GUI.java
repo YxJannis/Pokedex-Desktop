@@ -1,10 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.List;
 
+/**
+ * Initializes and handles the user interface
+ *
+ * @author Jannis Leuther, Max Pagel
+ */
 public class GUI extends JFrame{
 
     private int rows;
@@ -23,13 +31,12 @@ public class GUI extends JFrame{
 
     private LinkedHashMap<Pokemon, JLabel> picLabelMap;
 
+    private GridLayout pokeGridLayout;
+
     private JPanel mainPanel;
     private JPanel menuPanel;
     private JPanel sortPanel;
     private JPanel filterPanel;
-    private JPanel teamPanel;
-
-    private JScrollPane scrollpane;
 
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
@@ -65,10 +72,11 @@ public class GUI extends JFrame{
     private JMenuItem typeFairy;
     private JMenuItem typeGhost;
     private JMenuItem typeIce;
-    //...
 
     private JMenuItem legendaryTrue;
     private JMenuItem legendaryFalse;
+
+    private JButton resetFilterBtn;
 
     private JLabel pokeBallOne;
     private JLabel pokeBallTwo;
@@ -88,8 +96,10 @@ public class GUI extends JFrame{
         sortBy = "number";
 
         circleCount = 0;
-        rows = 28;
-        cols = 28;
+        //rows = 28;
+        rows = (int)Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
+        //cols = 28;
+        cols = (int)Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
 
         picLabelMap = new LinkedHashMap<>();
 
@@ -100,7 +110,9 @@ public class GUI extends JFrame{
 
         // Initialize panels
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(rows, cols, 5,5));
+
+        pokeGridLayout = new GridLayout(rows,cols,5,5);
+        mainPanel.setLayout(pokeGridLayout);
 
         menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel,BoxLayout.Y_AXIS));
@@ -130,17 +142,27 @@ public class GUI extends JFrame{
         }
 
         handleSortAttributeBtns();
-        fillDataGrid(sortBy);
+        fillDataGrid();
 
-        scrollpane = new JScrollPane(mainPanel);
+        JScrollPane scrollpane = new JScrollPane(mainPanel);
         add(menuPanel, BorderLayout.WEST);
         add(scrollpane);
         pack();
         setVisible(true);
-
     }
 
-    // initializes Buttons
+    private void updateGridLayout(){
+        //rows = 28;
+        if (dataProvider.getPokemon().size() > 0) {
+            rows = (int) Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
+            //cols = 28;
+            cols = (int) Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
+        }
+
+        pokeGridLayout.setRows(rows);
+        pokeGridLayout.setColumns(cols);
+    }
+
     private void initButtons(){
         sortByNumberBtn = new JButton(new ImageIcon(imgHandler.getNumberSortButtonImg()));
         sortByAttackBtn = new JButton(new ImageIcon(imgHandler.getAttackSortButtonImg()));
@@ -149,6 +171,7 @@ public class GUI extends JFrame{
         sortBySpDefenseBtn = new JButton(new ImageIcon(imgHandler.getSpDefenseSortButtonImg()));
         sortBySpeedBtn = new JButton(new ImageIcon(imgHandler.getSpeedSortButtonImg()));
         sortByHealthBtn = new JButton(new ImageIcon(imgHandler.getHealthSortButtonImg()));
+        resetFilterBtn = new JButton(new ImageIcon(imgHandler.getTestButtonImg()));
 
         sortByNumberBtn.setBorder(BorderFactory.createEmptyBorder());
         sortByNumberBtn.setContentAreaFilled(false);
@@ -164,6 +187,9 @@ public class GUI extends JFrame{
         sortBySpeedBtn.setContentAreaFilled(false);
         sortByHealthBtn.setBorder(BorderFactory.createEmptyBorder());
         sortByHealthBtn.setContentAreaFilled(false);
+
+        resetFilterBtn.setBorder(BorderFactory.createEmptyBorder());
+        resetFilterBtn.setContentAreaFilled(false);
     }
 
     private void initSortPanel(){
@@ -219,13 +245,15 @@ public class GUI extends JFrame{
         filterPanel.setLayout(new BoxLayout(filterPanel,BoxLayout.Y_AXIS));
         filterPanel.add(new JLabel((new ImageIcon(imgHandler.getFilterHeaderImg()))));
 
-        // Filter by generation
-        JPopupMenu generationMenu = new JPopupMenu("Generation");
-        JPopupMenu typeMenu = new JPopupMenu("Type");
-        JPopupMenu legendaryMenu = new JPopupMenu("Legendary");
-
+        // initialize filter JMenuItems
         initFilterMenuItems();
 
+        // Create JPopupMenus for each filter type
+        JPopupMenu generationMenu = new JPopupMenu("Generation");
+        JPopupMenu typeMenu = new JPopupMenu("PokeType");
+        JPopupMenu legendaryMenu = new JPopupMenu("Legendary");
+
+        // Filter by generation
         generationMenu.add(genOne);
         generationMenu.add(genTwo);
         generationMenu.add(genThree);
@@ -242,6 +270,7 @@ public class GUI extends JFrame{
             }
         });
 
+        // Filter by type
         typeMenu.add(typeWater);
         typeMenu.add(typeNormal);
         typeMenu.add(typeFlying);
@@ -269,6 +298,7 @@ public class GUI extends JFrame{
             }
         });
 
+        // filter by legendary status
         legendaryMenu.add(legendaryTrue);
         legendaryMenu.add(legendaryFalse);
 
@@ -280,11 +310,17 @@ public class GUI extends JFrame{
             }
         });
 
+        handleFilterBtns();
+
+        // add resetFilter button
+        filterPanel.add(resetFilterBtn);
+
+        // add everything to the menu panel
         menuPanel.add(filterPanel);
     }
 
     private void initTeamPanel(){
-        teamPanel = new JPanel();
+        JPanel teamPanel = new JPanel();
         teamPanel.setLayout(new BoxLayout(teamPanel,BoxLayout.Y_AXIS));
         teamPanel.add(new JLabel((new ImageIcon(imgHandler.getYourTeamImg()))));
 
@@ -307,7 +343,7 @@ public class GUI extends JFrame{
         menuPanel.add(teamPanel);
     }
     
-    public void addMouseListenersToPokeBall(JLabel pokeBall){
+    private void addMouseListenersToPokeBall(JLabel pokeBall){
         pokeBall.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -325,16 +361,23 @@ public class GUI extends JFrame{
         });
     }
 
-    private void fillDataGrid(String attribute){
-
-        dataProvider.sortByAttribute(attribute, descending);
-        System.out.println("Filling grid");
+    private void fillDataGrid(){
 
         mainPanel.removeAll();
+        updateGridLayout();
 
         for (Pokemon pokEntity: dataProvider.getPokemon()) {
-            BufferedImage pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                    pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
+
+            BufferedImage pokePicture;
+
+            if (pokEntity.isChosenForTeam()) {
+                pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
+                        pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.ORANGE);
+            }
+            else {
+                pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
+                        pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
+            }
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
             JLabel picLabel = new JLabel(pokeIcon);
 
@@ -414,41 +457,113 @@ public class GUI extends JFrame{
     private void handleSortAttributeBtns(){
         sortByNumberBtn.addActionListener(e -> {
             sortBy = "number";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
 
         });
         sortByAttackBtn.addActionListener(e -> {
             sortBy="attack";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
 
         });
         sortByDefenseBtn.addActionListener(e -> {
             sortBy="defense";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
         });
         sortBySpAttackBtn.addActionListener(e -> {
             sortBy="spAttack";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
         });
         sortBySpDefenseBtn.addActionListener(e -> {
             sortBy="spDefense";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
         });
         sortBySpeedBtn.addActionListener(e -> {
             sortBy="speed";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
         });
         sortByHealthBtn.addActionListener(e -> {
             sortBy="health";
-            fillDataGrid(sortBy);
+            dataProvider.sortByAttribute(sortBy, descending);
+            fillDataGrid();
             descending = !descending;
         });
+    }
+
+    private void handleGenerationFilters(JMenuItem menuItem, int generation){
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataProvider.filterByGeneration(generation);
+                fillDataGrid();
+            }
+        });
+    }
+
+    private void handleTypeFilters(JMenuItem menuItem, PokeType type){
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataProvider.filterByType(type);
+                fillDataGrid();
+            }
+        });
+    }
+
+    private void handleIsLegendaryFilters(JMenuItem menuItem, boolean isLegendary){
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataProvider.filterByIsLegendary(isLegendary);
+                fillDataGrid();
+            }
+        });
+    }
+
+    private void handleFilterBtns(){
+
+        List<JMenuItem> generationMenuItems = new ArrayList<>(Arrays.asList(genOne, genTwo, genThree, genFour,
+                genFive, genSix, genSeven));
+
+        for (int i = 0; i < generationMenuItems.size(); i++) {
+            handleGenerationFilters(generationMenuItems.get(i),i+1);
+        }
+
+        List<JMenuItem> typeMenuItems = new ArrayList<>(Arrays.asList(typeWater,typeNormal,typeFlying,typeGrass,
+                typePsychic,typeBug,typeFire,typePoison,typeGround,typeRock,typeFighting,typeDark, typeSteel,
+                typeElectric, typeDragon, typeFairy, typeGhost, typeIce));
+
+        List<PokeType> typeMenuPokeTypes = new ArrayList<>(Arrays.asList(PokeType.WATER, PokeType.NORMAL, PokeType.FLYING,
+                PokeType.GRASS, PokeType.PSYCHIC, PokeType.BUG, PokeType.FIRE, PokeType.POISON, PokeType.GROUND, PokeType.ROCK,
+                PokeType.FIGHTING, PokeType.DARK, PokeType.STEEL, PokeType.ELECTRIC, PokeType.DRAGON, PokeType.FAIRY,
+                PokeType.GHOST, PokeType.ICE));
+
+        for (int i = 0; i < typeMenuItems.size(); i++) {
+            handleTypeFilters(typeMenuItems.get(i),typeMenuPokeTypes.get(i));
+        }
+
+        handleIsLegendaryFilters(legendaryTrue, true);
+        handleIsLegendaryFilters(legendaryFalse, false);
+
+        resetFilterBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataProvider.resetFilter();
+                fillDataGrid();
+            }
+        });
+
     }
 
     public static void main(String[] args) {

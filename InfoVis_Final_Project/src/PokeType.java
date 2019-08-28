@@ -1,4 +1,4 @@
-public enum Type {
+public enum PokeType {
     FIRE,
     WATER,
     NORMAL,

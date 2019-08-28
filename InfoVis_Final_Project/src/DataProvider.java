@@ -2,13 +2,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+/**
+ * handles and provides data for usage in GUI
+ *
+ * @author Jannis Leuther, Max Pagel
+ */
+
 public class DataProvider {
+
     private ArrayList<Pokemon> pokemon;
+    private ArrayList<Pokemon> allPokemon;
 
 
     public DataProvider(){
         DataReader dataReader = new DataReader();
         this.pokemon = dataReader.getPokemon();
+        this.allPokemon = this.pokemon;
     }
 
     public void sortByAttribute(String attribute, boolean descending){
@@ -25,7 +34,6 @@ public class DataProvider {
                 });
                 break;
             case "attack":
-                System.out.println("Sorting by attack in DataProvider");
                 Collections.sort(pokemon, (o1, o2) -> {
                     if (o1.getAttack() == o2.getAttack()){
                         return 0;
@@ -38,7 +46,6 @@ public class DataProvider {
 
                 break;
             case "defense":
-                System.out.println("Sorting by defense in DataProvider");
                 Collections.sort(pokemon, (o1, o2) -> {
                     if (o1.getDefense() == o2.getDefense()){
                         return 0;
@@ -93,6 +100,40 @@ public class DataProvider {
                         return o1.getHealth() < o2.getHealth() ? -1 : 1;
                 });
         }
+    }
+
+    public void filterByGeneration(int generation){
+        ArrayList<Pokemon> filteredList = new ArrayList<>();
+        for (Pokemon pokemon: pokemon) {
+            if (pokemon.getGeneration()==generation){
+                filteredList.add(pokemon);
+            }
+        }
+        this.pokemon = filteredList;
+    }
+
+    public void filterByType(PokeType type){
+        ArrayList<Pokemon> filteredList = new ArrayList<>();
+        for (Pokemon pokemon: pokemon) {
+            if (pokemon.getType1()==type || pokemon.getType2()==type){
+                filteredList.add(pokemon);
+            }
+        }
+        this.pokemon = filteredList;
+    }
+
+    public void filterByIsLegendary(boolean isLegendary){
+        ArrayList<Pokemon> filteredList = new ArrayList<>();
+        for (Pokemon pokemon: pokemon) {
+            if (pokemon.isLegendary() == isLegendary){
+                filteredList.add(pokemon);
+            }
+        }
+        this.pokemon = filteredList;
+    }
+
+    public void resetFilter(){
+        this.pokemon = allPokemon;
     }
 
     public static double getAttackScale(int attack){

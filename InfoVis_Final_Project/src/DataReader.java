@@ -5,8 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * Reads data from specific comma separated values (csv) file
+ *
+ * @author Max Pagel, Jannis Leuther
+ */
 public class DataReader {
 
     ArrayList<Pokemon> pokemon;
@@ -37,22 +41,22 @@ public class DataReader {
                         attributes[33] + " " + attributes[34] + " " + attributes[35] + " " + attributes[28]);
                 */
 
-                Type type2 = null;
+                PokeType type2 = null;
                 if(!attributes[37].isEmpty()){
-                    type2 = Type.valueOf(attributes[37].toUpperCase());
+                    type2 = PokeType.valueOf(attributes[37].toUpperCase());
                 }
 
                 Pokemon p = new Pokemon(Integer.parseInt(attributes[19]),Integer.parseInt(attributes[25]),Integer.parseInt(attributes[33]),Integer.parseInt(attributes[34]),Integer.parseInt(attributes[35]),Integer.parseInt(attributes[28]),
-                        attributes[30], Integer.parseInt(attributes[32]),Integer.parseInt(attributes[39]),"1".equals(attributes[40]),Type.valueOf(attributes[36].toUpperCase()), type2);
+                        attributes[30], Integer.parseInt(attributes[32]),Integer.parseInt(attributes[39]),"1".equals(attributes[40]), PokeType.valueOf(attributes[36].toUpperCase()), type2);
 
                 /*
                 p.setNumber(Integer.parseInt(attributes[32]));
                 p.setName(attributes[30]);
                 p.setGeneration(Integer.parseInt(attributes[39]));
                 p.setLegendary("1".equals(attributes[40]));
-                p.setType1(Type.valueOf(attributes[36].toUpperCase()));
+                p.setType1(PokeType.valueOf(attributes[36].toUpperCase()));
                 if(!attributes[37].isEmpty()){
-                    p.setType2(Type.valueOf(attributes[37].toUpperCase()));
+                    p.setType2(PokeType.valueOf(attributes[37].toUpperCase()));
                 }
 
                 p.setAttack(Integer.parseInt(attributes[19]));

@@ -4,6 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * handles and provides image resources for usage in GUI
+ *
+ * @author Jannis Leuther, Max Pagel
+ */
+
 public class ImageHandler {
 
     private static int imageBaseWidth = 40;
@@ -88,8 +94,7 @@ public class ImageHandler {
 
 
     public BufferedImage scaleImage(BufferedImage imageToScale, double scaleFactor){
-        // scale factor can range from 0.1(min) to 1.0 (max)
-        // min factor maybe has to be changed
+        // scale factor can range from 0.2(min) to 1.0 (max)
         BufferedImage scaledImage = null;
 
         if (imageToScale != null){

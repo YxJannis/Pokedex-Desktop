@@ -1,5 +1,10 @@
 import java.awt.image.BufferedImage;
 
+/**
+ * Class for the Pokemon object
+ *
+ * @author Max Pagel, Jannis Leuther
+ */
 public class Pokemon {
 
     int attack;
@@ -9,27 +14,27 @@ public class Pokemon {
     int speed;
     int health;
 
-    double attackScale;
-    double defenseScale;
-    double spAttackScale;
-    double spDefenseScale;
-    double speedScale;
-    double healthScale;
+    private double attackScale;
+    private double defenseScale;
+    private double spAttackScale;
+    private double spDefenseScale;
+    private double speedScale;
+    private double healthScale;
 
-    String name;
-    int number;
-    int generation;
-    boolean legendary;
-    Type type1;
-    Type type2;
-    BufferedImage sprite;
+    private String name;
+    private int number;
+    private int generation;
+    private boolean legendary;
+    private PokeType type1;
+    private PokeType type2;
+    private BufferedImage sprite;
 
-    boolean chosenForTeam = false;
+    private boolean chosenForTeam = false;
 
     public Pokemon() {
     }
 
-    public Pokemon(int attack, int defense, int spAttack, int spDefense, int speed, int health, String name, int number, int generation, boolean legendary, Type type1, Type type2) {
+    public Pokemon(int attack, int defense, int spAttack, int spDefense, int speed, int health, String name, int number, int generation, boolean legendary, PokeType type1, PokeType type2) {
         this.attack = attack;
         this.defense = defense;
         this.spAttack = spAttack;
@@ -130,19 +135,19 @@ public class Pokemon {
         this.legendary = legendary;
     }
 
-    public Type getType1() {
+    public PokeType getType1() {
         return type1;
     }
 
-    public void setType1(Type type1) {
+    public void setType1(PokeType type1) {
         this.type1 = type1;
     }
 
-    public Type getType2() {
+    public PokeType getType2() {
         return type2;
     }
 
-    public void setType2(Type type2) {
+    public void setType2(PokeType type2) {
         this.type2 = type2;
     }
 
