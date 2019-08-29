@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class ImageHandler {
 
-    private static final int imageBaseWidth = 40;
-    private static final int imageBaseHeight = 40;
+    private static final int imageBaseWidth = 30;
+    private static final int imageBaseHeight = 45;
 
     // attribute images
     private BufferedImage attackImg = null;
@@ -49,12 +49,12 @@ public class ImageHandler {
 
     public ImageHandler(){
         try {
-            attackImg = ImageIO.read(new File("src/images/Attack-40x40.png"));
-            defenseImg = ImageIO.read(new File("src/images/Defense-40x40.png"));
-            spAttackImg = ImageIO.read(new File("src/images/SpAttack-40x40.png"));
-            spDefenseImg = ImageIO.read(new File("src/images/SpDefense-40x40.png"));
-            speedImg = ImageIO.read(new File("src/images/Speed-40x40.png"));
-            healthImg = ImageIO.read(new File("src/images/Health-40x40.png"));
+            attackImg = ImageIO.read(new File("src/images/attack.png"));
+            defenseImg = ImageIO.read(new File("src/images/defense.png"));
+            spAttackImg = ImageIO.read(new File("src/images/spAttack.png"));
+            spDefenseImg = ImageIO.read(new File("src/images/spDefense.png"));
+            speedImg = ImageIO.read(new File("src/images/speed.png"));
+            healthImg = ImageIO.read(new File("src/images/health.png"));
 
             sortHeaderImg = ImageIO.read(new File("src/images/sort-header.png"));
             filterHeaderImg = ImageIO.read(new File("src/images/filter-header.png"));
