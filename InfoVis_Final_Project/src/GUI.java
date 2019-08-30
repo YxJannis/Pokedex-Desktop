@@ -36,6 +36,8 @@ public class GUI extends JFrame{
     private JPanel sortPanel;
     private JPanel filterPanel;
 
+    JPopupMenu pokeInfoPopup;
+
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
     private JButton sortByDefenseBtn;
@@ -150,10 +152,8 @@ public class GUI extends JFrame{
     }
 
     private void updateGridLayout(){
-        //rows = 28;
         if (dataProvider.getPokemon().size() > 0) {
             rows = (int) Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
-            //cols = 28;
             cols = (int) Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
         }
 
@@ -356,6 +356,23 @@ public class GUI extends JFrame{
                     circleCount--;
                 }
             }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+                if (!(teamMap.get(pokeBall)==dummy)){
+                    Pokemon pokEntity = teamMap.get(pokeBall);
+                    fillPokeInfoPopup(pokEntity);
+                    pokeInfoPopup.show(pokeBall, pokeBall.getX(), pokeBall.getY());
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+                if (!(teamMap.get(pokeBall)==dummy)){
+                    Pokemon pokEntity = teamMap.get(pokeBall);
+                    pokeBall.setIcon(new ImageIcon(pokEntity.getSprite()));
+                }
+            }
         });
     }
 
@@ -376,18 +393,13 @@ public class GUI extends JFrame{
                 pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
                         pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
             }
+
+
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
             JLabel picLabel = new JLabel(pokeIcon);
 
-            JPopupMenu pokeInfoPopup = new JPopupMenu("Pokemon Info");
-            pokeInfoPopup.add(new JMenuItem(pokEntity.getName() + " - Nr: " + pokEntity.getNumber()));
-            pokeInfoPopup.add(new JMenuItem("Attack:" + pokEntity.getAttack()));
-            pokeInfoPopup.add(new JMenuItem("Defense:" + pokEntity.getDefense()));
-            pokeInfoPopup.add(new JMenuItem("Special Atk:" + pokEntity.getSpAttack()));
-            pokeInfoPopup.add(new JMenuItem("Special Def:" + pokEntity.getSpDefense()));
-            pokeInfoPopup.add(new JMenuItem("Speed:" + pokEntity.getSpeed()));
-            pokeInfoPopup.add(new JMenuItem("Health:" + pokEntity.getHealth()));
 
+            fillPokeInfoPopup(pokEntity);
             pokemonActions(pokEntity, picLabel, pokeInfoPopup);
 
             mainPanel.add(picLabel);
@@ -400,6 +412,17 @@ public class GUI extends JFrame{
         }
         mainPanel.revalidate();
         mainPanel.repaint();
+    }
+
+    public void fillPokeInfoPopup(Pokemon pokEntity){
+        pokeInfoPopup = new JPopupMenu("Pokemon Info");
+        pokeInfoPopup.add(new JMenuItem(pokEntity.getName() + " - Nr: " + pokEntity.getNumber()));
+        pokeInfoPopup.add(new JMenuItem("Attack:" + pokEntity.getAttack()));
+        pokeInfoPopup.add(new JMenuItem("Defense:" + pokEntity.getDefense()));
+        pokeInfoPopup.add(new JMenuItem("Special Atk:" + pokEntity.getSpAttack()));
+        pokeInfoPopup.add(new JMenuItem("Special Def:" + pokEntity.getSpDefense()));
+        pokeInfoPopup.add(new JMenuItem("Speed:" + pokEntity.getSpeed()));
+        pokeInfoPopup.add(new JMenuItem("Health:" + pokEntity.getHealth()));
     }
 
     private void pokemonActions(Pokemon pokEntity, JLabel picLabel, JPopupMenu pokeInfoPopup){

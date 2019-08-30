@@ -156,7 +156,11 @@ public class Pokemon {
     }
 
     public void setSprite(BufferedImage sprite) {
-        this.sprite = sprite;
+        if (this.generation == 7){
+            this.sprite = new ImageHandler().scaleSprite(sprite,sprite.getWidth());
+        }
+        else
+            this.sprite = sprite;
     }
 
     public boolean isChosenForTeam() {
