@@ -1,3 +1,5 @@
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -108,6 +110,22 @@ public class ImageHandler {
             g2.dispose();
         }
         return scaledImage;
+    }
+
+    public BufferedImage scaleSprite(BufferedImage spriteToScale, int initialDim){
+        BufferedImage scaledSprite = null;
+
+        double scaleFactor = 96.0/initialDim;
+
+        if (spriteToScale != null){
+            scaledSprite = new BufferedImage(96,96, spriteToScale.getType());
+            Graphics2D g2 = scaledSprite.createGraphics();
+            g2.drawImage(spriteToScale,0,0, (int)Math.round(initialDim*scaleFactor),
+                    (int)Math.round(initialDim*scaleFactor),null);
+            g2.dispose();
+        }
+
+        return scaledSprite;
     }
 
 
