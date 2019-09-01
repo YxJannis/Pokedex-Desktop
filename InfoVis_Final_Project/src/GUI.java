@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class GUI extends JFrame{
 
+    private int dimensionFactor = 1;
     private int rows;
     private int cols;
     private int circleCount;
@@ -37,8 +38,6 @@ public class GUI extends JFrame{
     private JPanel filterPanel;
 
     private JPopupMenu pokeInfoPopup;
-
-    private LinkedHashMap<JMenuItem, Boolean> pokeInfoPopupMap= new LinkedHashMap<>();
 
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
@@ -98,8 +97,8 @@ public class GUI extends JFrame{
         sortBy = "number";
 
         circleCount = 0;
-        rows = (int)Math.floor(0.5*Math.sqrt(dataProvider.getPokemon().size()));
-        cols = (int)Math.ceil(2*Math.sqrt(dataProvider.getPokemon().size()));
+        rows = (int)Math.floor((1.0/dimensionFactor)*Math.sqrt(dataProvider.getPokemon().size()));
+        cols = (int)Math.ceil(dimensionFactor*Math.sqrt(dataProvider.getPokemon().size()));
 
         picLabelMap = new LinkedHashMap<>();
 
@@ -155,8 +154,8 @@ public class GUI extends JFrame{
 
     private void updateGridLayout(){
         if (dataProvider.getPokemon().size() > 0) {
-            rows = (int) Math.floor(0.5*Math.sqrt(dataProvider.getPokemon().size()));
-            cols = (int) Math.ceil(2*Math.sqrt(dataProvider.getPokemon().size()));
+            rows = (int) Math.floor((1.0/dimensionFactor)*Math.sqrt(dataProvider.getPokemon().size()));
+            cols = (int) Math.ceil(dimensionFactor*Math.sqrt(dataProvider.getPokemon().size()));
         }
 
         pokeGridLayout.setRows(rows);
@@ -399,8 +398,7 @@ public class GUI extends JFrame{
         mainPanel.repaint();
     }
 
-
-    public void fillPokeInfoPopup(Pokemon pokEntity){
+    private void fillPokeInfoPopup(Pokemon pokEntity){
 
         JMenuItem attackMenuItem = new JMenuItem("Attack:" + pokEntity.getAttack());
         JMenuItem defenseMenuItem = new JMenuItem("Defense:" + pokEntity.getDefense());
@@ -408,13 +406,6 @@ public class GUI extends JFrame{
         JMenuItem spDefenseMenuItem = new JMenuItem("Special Def:" + pokEntity.getSpDefense());
         JMenuItem speedMenuItem = new JMenuItem("Speed:" + pokEntity.getSpeed());
         JMenuItem healthMenuItem = new JMenuItem("Health:" + pokEntity.getHealth());
-
-        pokeInfoPopupMap.put(attackMenuItem, false);
-        pokeInfoPopupMap.put(defenseMenuItem, false);
-        pokeInfoPopupMap.put(spAttackMenuItem, false);
-        pokeInfoPopupMap.put(spDefenseMenuItem, false);
-        pokeInfoPopupMap.put(speedMenuItem, false);
-        pokeInfoPopupMap.put(healthMenuItem, false);
 
         String typeString = pokEntity.getType1().toString().substring(0,1).toUpperCase() + pokEntity.getType1().toString().substring(1).toLowerCase();
         if (pokEntity.getType2() != null){
@@ -438,32 +429,7 @@ public class GUI extends JFrame{
         pokeInfoPopup.add(healthMenuItem);
         pokeInfoPopup.add(typesMenuItem);
 
-       /* for (Map.Entry<JMenuItem, String> entry: pokeInfoPopupMap.entrySet()) {
-            addPokeInfoMenuItemListeners(entry.getKey(),pokEntity);
-        }*/
-       addPokeInfoMenuItemListeners(attackMenuItem,pokEntity,"attack");
-       addPokeInfoMenuItemListeners(defenseMenuItem,pokEntity,"defense");
-       addPokeInfoMenuItemListeners(spAttackMenuItem,pokEntity,"spAttack");
-       addPokeInfoMenuItemListeners(spDefenseMenuItem,pokEntity,"spDefense");
-       addPokeInfoMenuItemListeners(speedMenuItem,pokEntity,"speed");
-       addPokeInfoMenuItemListeners(healthMenuItem,pokEntity,"health");
 
-    }
-
-    private void addPokeInfoMenuItemListeners(JMenuItem menuItem, Pokemon pokEntity, String attribute){
-        menuItem.addActionListener(e -> {
-            boolean isColored = pokeInfoPopupMap.get(menuItem);
-            if (!isColored) {
-                picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity, attribute)));
-                pokeInfoPopupMap.put(menuItem, true);
-            }
-            else{
-                picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity)));
-                pokeInfoPopupMap.put(menuItem, false);
-            }
-
-                //else: picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity)));
-        });
     }
 
     private void pokemonActions(Pokemon pokEntity, JLabel picLabel, JPopupMenu pokeInfoPopup){
