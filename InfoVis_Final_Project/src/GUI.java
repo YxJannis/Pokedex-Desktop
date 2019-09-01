@@ -457,19 +457,19 @@ public class GUI extends JFrame{
                             pokEntity.setPokeColor(Color.ORANGE);
                         }
                         else if (teamMap.get(pokeBallTwo)==dummy){
-                            pokEntity.setPokeColor(Color.CYAN);
+                            pokEntity.setPokeColor(new Color(52, 152, 219));
                         }
                         else if (teamMap.get(pokeBallThree)==dummy){
-                            pokEntity.setPokeColor(Color.MAGENTA);
+                            pokEntity.setPokeColor(new Color(231, 76, 60));
                         }
                         else if (teamMap.get(pokeBallFour)==dummy){
-                            pokEntity.setPokeColor(Color.GREEN);
+                            pokEntity.setPokeColor(new Color(46, 204, 113));
                         }
                         else if (teamMap.get(pokeBallFive)==dummy){
-                            pokEntity.setPokeColor(Color.BLUE);
+                            pokEntity.setPokeColor(new Color(200, 0, 255));
                         }
                         else if (teamMap.get(pokeBallSix)==dummy){
-                            pokEntity.setPokeColor(Color.getHSBColor(20.f,20.f,20.f));
+                            pokEntity.setPokeColor(Color.YELLOW);
                         }
 
                         BufferedImage coloredPokePicture = imgHandler.generateIcon(pokEntity);

@@ -182,6 +182,8 @@ public class ImageHandler {
         g2d.drawImage(image,null,0,0);
         g2d.setColor(rectColor);
         g2d.fillRect(80,5,16,16);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(80,5,16,16);
         return newImage;
     }
 
