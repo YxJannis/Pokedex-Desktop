@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -28,6 +29,7 @@ public class Pokemon {
     private PokeType type1;
     private PokeType type2;
     private BufferedImage sprite;
+    private Color pokeColor;
 
     private boolean chosenForTeam = false;
 
@@ -47,6 +49,7 @@ public class Pokemon {
         this.legendary = legendary;
         this.type1 = type1;
         this.type2 = type2;
+        this.pokeColor = Color.WHITE;
         this.attackScale = DataProvider.getAttackScale(attack);
         this.spAttackScale = DataProvider.getSpAttackScale(spAttack);
         this.defenseScale = DataProvider.getDefenseScale(defense);
@@ -169,6 +172,14 @@ public class Pokemon {
 
     public void setChosenForTeam(boolean chosenForTeam) {
         this.chosenForTeam = chosenForTeam;
+    }
+
+    public Color getPokeColor() {
+        return pokeColor;
+    }
+
+    public void setPokeColor(Color pokeColor) {
+        this.pokeColor = pokeColor;
     }
 
     public double getAttackScale() {

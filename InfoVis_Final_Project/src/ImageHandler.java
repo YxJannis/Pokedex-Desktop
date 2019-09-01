@@ -26,6 +26,7 @@ public class ImageHandler {
     private BufferedImage healthImg = null;
 
     // menu images
+    // TODO: font in: sans bold?
     private BufferedImage sortHeaderImg = null;
     private BufferedImage filterHeaderImg = null;
     private BufferedImage yourTeamImg = null;
@@ -93,7 +94,7 @@ public class ImageHandler {
 
         BufferedImage finalImage = joinImages(attack_scaled, spAttack_scaled, speed_scaled, defense_scaled,spDefense_scaled, health_scaled, backgroundColor);
 
-        return drawBorder(finalImage);
+        return drawBorder(finalImage, Color.BLACK);
     }
 
 
@@ -159,11 +160,11 @@ public class ImageHandler {
     }
 
     // Drawing rectangle around image
-    private BufferedImage drawBorder(BufferedImage image){
-        if (image != null) {
+    public static BufferedImage drawBorder(BufferedImage image, Color borderColor){
+        if (image != null && borderColor != null) {
             Graphics2D g = (Graphics2D) image.getGraphics();
             g.setStroke(new BasicStroke(2));
-            g.setColor(Color.BLACK);
+            g.setColor(borderColor);
             g.drawRect(0, 0, image.getWidth(), image.getHeight());
         }
         return image;

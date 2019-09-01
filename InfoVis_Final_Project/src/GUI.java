@@ -36,7 +36,7 @@ public class GUI extends JFrame{
     private JPanel sortPanel;
     private JPanel filterPanel;
 
-    JPopupMenu pokeInfoPopup;
+    private JPopupMenu pokeInfoPopup;
 
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
@@ -350,6 +350,7 @@ public class GUI extends JFrame{
                     Pokemon pokEntity = teamMap.get(pokeBall);
                     teamMap.get(pokeBall).setChosenForTeam(false);
                     teamMap.put(pokeBall, dummy);
+                    pokEntity.setPokeColor(Color.WHITE);
                     BufferedImage coloredPokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
                             pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
                     picLabelMap.get(pokEntity).setIcon(new ImageIcon(coloredPokePicture));
@@ -362,7 +363,7 @@ public class GUI extends JFrame{
                 if (!(teamMap.get(pokeBall)==dummy)){
                     Pokemon pokEntity = teamMap.get(pokeBall);
                     fillPokeInfoPopup(pokEntity);
-                    pokeInfoPopup.show(pokeBall, pokeBall.getX(), pokeBall.getY());
+                    pokeInfoPopup.show(pokeBall, pokeBall.getWidth(), pokeBall.getY());
                 }
             }
 
@@ -383,16 +384,9 @@ public class GUI extends JFrame{
 
         for (Pokemon pokEntity: dataProvider.getPokemon()) {
 
-            BufferedImage pokePicture;
-
-            if (pokEntity.isChosenForTeam()) {
-                pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                        pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.ORANGE);
-            }
-            else {
-                pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                        pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
-            }
+            BufferedImage pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(),
+                    pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
+                    pokEntity.getSpeedScale(), pokEntity.getHealthScale(), pokEntity.getPokeColor());
 
 
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
@@ -436,9 +430,30 @@ public class GUI extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 if (!pokEntity.isChosenForTeam()) {
                     if (circleCount <=5) {
+                        if (teamMap.get(pokeBallOne)==dummy) {
+                            pokEntity.setPokeColor(Color.ORANGE);
+                        }
+                        else if (teamMap.get(pokeBallTwo)==dummy){
+                            pokEntity.setPokeColor(Color.CYAN);
+                        }
+                        else if (teamMap.get(pokeBallThree)==dummy){
+                            pokEntity.setPokeColor(Color.MAGENTA);
+                        }
+                        else if (teamMap.get(pokeBallFour)==dummy){
+                            pokEntity.setPokeColor(Color.GREEN);
+                        }
+                        else if (teamMap.get(pokeBallFive)==dummy){
+                            pokEntity.setPokeColor(Color.BLUE);
+                        }
+                        else if (teamMap.get(pokeBallSix)==dummy){
+                            pokEntity.setPokeColor(Color.getHSBColor(20.f,20.f,20.f));
+                        }
+
                         BufferedImage coloredPokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                                pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.ORANGE);
+                                pokEntity.getSpeedScale(), pokEntity.getHealthScale(), pokEntity.getPokeColor());
                         picLabel.setIcon(new ImageIcon(coloredPokePicture));
+                        //orange, cyan, lightgreen, magenta,
+
                         pokEntity.setChosenForTeam(true);
 
                         for (Map.Entry<JLabel, Pokemon> entry: teamMap.entrySet()) {
@@ -459,6 +474,7 @@ public class GUI extends JFrame{
                     picLabel.setIcon(new ImageIcon(coloredPokePicture));
                     pokEntity.setChosenForTeam(false);
                     circleCount--;
+                    pokEntity.setPokeColor(Color.WHITE);
 
                     for (Map.Entry<JLabel, Pokemon> entry: teamMap.entrySet()) {
                         if (entry.getValue()==pokEntity){
