@@ -1,5 +1,3 @@
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,7 +24,6 @@ public class ImageHandler {
     private BufferedImage healthImg = null;
 
     // menu images
-    // TODO: font in: sans bold?
     private BufferedImage sortHeaderImg = null;
     private BufferedImage filterHeaderImg = null;
     private BufferedImage yourTeamImg = null;
@@ -83,7 +80,19 @@ public class ImageHandler {
         }
     }
 
-    public BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
+    public BufferedImage generateIcon (Pokemon pokEntity){
+        double attack_scale = DataProvider.getAttackScale(pokEntity.getAttack());
+        double defense_scale = DataProvider.getDefenseScale(pokEntity.getDefense());
+        double spAttack_scale = DataProvider.getSpAttackScale(pokEntity.getSpAttack());
+        double spDefense_scale = DataProvider.getSpDefenseScale(pokEntity.getSpDefense());
+        double speed_scale = DataProvider.getSpeedScale(pokEntity.getSpeed());
+        double health_scale = DataProvider.getHealthScale(pokEntity.getHealth());
+        Color backgroundColor = pokEntity.getPokeColor();
+        return generateIconComposition(attack_scale, defense_scale, spAttack_scale, spDefense_scale, speed_scale, health_scale, backgroundColor);
+    }
+
+
+    private BufferedImage generateIconComposition(double attack_scale, double defense_scale, double spAttack_scale,
                                                  double spDefense_scale, double speed_scale, double health_scale, Color backgroundColor){
         BufferedImage attack_scaled = scaleImage(getAttackImg(), attack_scale);
         BufferedImage defense_scaled = scaleImage(getDefenseImg(), defense_scale);
@@ -137,35 +146,53 @@ public class ImageHandler {
         int height = imageBaseHeight*2+offset;
 
         BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = newImage.createGraphics();
-        Color oldColor = g2.getColor();
-        g2.setPaint(backgroundColor);
-        g2.fillRect(0,0,width,height);
-        g2.setColor(oldColor);
+        Graphics2D g2d = newImage.createGraphics();
+        Color oldColor = g2d.getColor();
+        g2d.setPaint(backgroundColor);
+        g2d.fillRect(0,0,width,height);
+        g2d.setColor(oldColor);
 
-        g2.drawImage(img1,null,(imageBaseWidth-img1.getWidth())/2,
+        g2d.drawImage(img1,null,(imageBaseWidth-img1.getWidth())/2,
                 (imageBaseHeight-img1.getHeight())/2);
-        g2.drawImage(img2,null, imageBaseWidth+(imageBaseWidth-img2.getWidth())/2+offset,
+        g2d.drawImage(img2,null, imageBaseWidth+(imageBaseWidth-img2.getWidth())/2+offset,
                 (imageBaseHeight-img2.getHeight())/2);
-        g2.drawImage(img3, null, imageBaseWidth*2+(imageBaseWidth-img3.getWidth())/2+offset,
+        g2d.drawImage(img3, null, imageBaseWidth*2+(imageBaseWidth-img3.getWidth())/2+offset,
                 (imageBaseHeight-img3.getHeight())/2);
-        g2.drawImage(img4, null, (imageBaseWidth-img4.getWidth())/2,
+        g2d.drawImage(img4, null, (imageBaseWidth-img4.getWidth())/2,
                 imageBaseHeight + (imageBaseHeight-img4.getHeight())/2+offset );
-        g2.drawImage(img5, null, imageBaseWidth+(imageBaseWidth-img5.getWidth())/2+offset,
+        g2d.drawImage(img5, null, imageBaseWidth+(imageBaseWidth-img5.getWidth())/2+offset,
                 imageBaseHeight+(imageBaseHeight-img5.getHeight())/2+offset);
-        g2.drawImage(img6, null, imageBaseWidth*2+(imageBaseWidth-img6.getWidth())/2+offset,
+        g2d.drawImage(img6, null, imageBaseWidth*2+(imageBaseWidth-img6.getWidth())/2+offset,
                 imageBaseHeight+(imageBaseHeight-img6.getHeight())/2+offset);
-        g2.dispose();
+        g2d.dispose();
+        return newImage;
+    }
+
+    public static BufferedImage drawColorRectangle(Pokemon pokEntity) {
+        BufferedImage image = pokEntity.getSprite();
+        final Color rectColor = pokEntity.getPokeColor();
+
+        BufferedImage newImage = new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = newImage.createGraphics();
+        Color oldColor = g2d.getColor();
+        g2d.setPaint(new Color(0f,0f,0f,0f));
+        g2d.fillRect(0,0,100,100);
+        g2d.setColor(oldColor);
+
+        g2d.drawImage(image,null,0,0);
+        g2d.setColor(rectColor);
+        g2d.fillRect(80,5,16,16);
         return newImage;
     }
 
     // Drawing rectangle around image
     public static BufferedImage drawBorder(BufferedImage image, Color borderColor){
         if (image != null && borderColor != null) {
-            Graphics2D g = (Graphics2D) image.getGraphics();
-            g.setStroke(new BasicStroke(2));
-            g.setColor(borderColor);
-            g.drawRect(0, 0, image.getWidth(), image.getHeight());
+            Graphics2D g2d = (Graphics2D) image.getGraphics();
+            g2d.setStroke(new BasicStroke(2));
+            g2d.setColor(borderColor);
+            g2d.drawRect(0, 0, image.getWidth(), image.getHeight());
+            g2d.dispose();
         }
         return image;
     }

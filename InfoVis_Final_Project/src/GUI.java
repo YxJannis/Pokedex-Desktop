@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -37,6 +39,14 @@ public class GUI extends JFrame{
     private JPanel filterPanel;
 
     private JPopupMenu pokeInfoPopup;
+
+    private JMenuItem attackMenuItem;
+    private JMenuItem defenseMenuItem;
+    private JMenuItem spAttackMenuItem;
+    private JMenuItem spDefenseMenuItem;
+    private JMenuItem speedMenuItem;
+    private JMenuItem healthMenuItem;
+    private JMenuItem typesMenuItem;
 
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
@@ -96,8 +106,8 @@ public class GUI extends JFrame{
         sortBy = "number";
 
         circleCount = 0;
-        rows = (int)Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
-        cols = (int)Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
+        rows = (int)Math.floor(0.5*Math.sqrt(dataProvider.getPokemon().size()));
+        cols = (int)Math.ceil(2*Math.sqrt(dataProvider.getPokemon().size()));
 
         picLabelMap = new LinkedHashMap<>();
 
@@ -153,8 +163,8 @@ public class GUI extends JFrame{
 
     private void updateGridLayout(){
         if (dataProvider.getPokemon().size() > 0) {
-            rows = (int) Math.floor(Math.sqrt(dataProvider.getPokemon().size()));
-            cols = (int) Math.ceil(Math.sqrt(dataProvider.getPokemon().size()));
+            rows = (int) Math.floor(0.5*Math.sqrt(dataProvider.getPokemon().size()));
+            cols = (int) Math.ceil(2*Math.sqrt(dataProvider.getPokemon().size()));
         }
 
         pokeGridLayout.setRows(rows);
@@ -351,8 +361,7 @@ public class GUI extends JFrame{
                     teamMap.get(pokeBall).setChosenForTeam(false);
                     teamMap.put(pokeBall, dummy);
                     pokEntity.setPokeColor(Color.WHITE);
-                    BufferedImage coloredPokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                            pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
+                    BufferedImage coloredPokePicture = imgHandler.generateIcon(pokEntity);
                     picLabelMap.get(pokEntity).setIcon(new ImageIcon(coloredPokePicture));
                     circleCount--;
                 }
@@ -363,15 +372,7 @@ public class GUI extends JFrame{
                 if (!(teamMap.get(pokeBall)==dummy)){
                     Pokemon pokEntity = teamMap.get(pokeBall);
                     fillPokeInfoPopup(pokEntity);
-                    pokeInfoPopup.show(pokeBall, pokeBall.getWidth(), pokeBall.getY());
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                if (!(teamMap.get(pokeBall)==dummy)){
-                    Pokemon pokEntity = teamMap.get(pokeBall);
-                    pokeBall.setIcon(new ImageIcon(pokEntity.getSprite()));
+                    pokeInfoPopup.show(pokeBall, pokeBall.getWidth(), 0);
                 }
             }
         });
@@ -384,9 +385,7 @@ public class GUI extends JFrame{
 
         for (Pokemon pokEntity: dataProvider.getPokemon()) {
 
-            BufferedImage pokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(),
-                    pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                    pokEntity.getSpeedScale(), pokEntity.getHealthScale(), pokEntity.getPokeColor());
+            BufferedImage pokePicture = imgHandler.generateIcon(pokEntity);
 
 
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
@@ -409,14 +408,38 @@ public class GUI extends JFrame{
     }
 
     public void fillPokeInfoPopup(Pokemon pokEntity){
+        attackMenuItem = new JMenuItem("Attack:" + pokEntity.getAttack());
+        defenseMenuItem = new JMenuItem("Defense:" + pokEntity.getDefense());
+        spAttackMenuItem = new JMenuItem("Special Atk:" + pokEntity.getSpAttack());
+        spDefenseMenuItem = new JMenuItem("Special Def:" + pokEntity.getSpDefense());
+        speedMenuItem = new JMenuItem("Speed:" + pokEntity.getSpeed());
+        healthMenuItem = new JMenuItem("Health:" + pokEntity.getHealth());
+
+        String typeString = pokEntity.getType1().toString().substring(0,1).toUpperCase() + pokEntity.getType1().toString().substring(1).toLowerCase();
+        if (pokEntity.getType2() != null){
+            typeString = typeString + ", " + pokEntity.getType2().toString().substring(0,1).toUpperCase() + pokEntity.getType2().toString().substring(1).toLowerCase();
+        }
+        typesMenuItem = new JMenuItem("Types: " + typeString);
+
+        String titleString = pokEntity.getName() + " - Nr: " + pokEntity.getNumber();
+
+        if (pokEntity.isLegendary()){
+            titleString = pokEntity.getName() + " " + (char) 9733 + " - Nr: " + pokEntity.getNumber();
+        }
+
         pokeInfoPopup = new JPopupMenu("Pokemon Info");
-        pokeInfoPopup.add(new JMenuItem(pokEntity.getName() + " - Nr: " + pokEntity.getNumber()));
-        pokeInfoPopup.add(new JMenuItem("Attack:" + pokEntity.getAttack()));
-        pokeInfoPopup.add(new JMenuItem("Defense:" + pokEntity.getDefense()));
-        pokeInfoPopup.add(new JMenuItem("Special Atk:" + pokEntity.getSpAttack()));
-        pokeInfoPopup.add(new JMenuItem("Special Def:" + pokEntity.getSpDefense()));
-        pokeInfoPopup.add(new JMenuItem("Speed:" + pokEntity.getSpeed()));
-        pokeInfoPopup.add(new JMenuItem("Health:" + pokEntity.getHealth()));
+        pokeInfoPopup.add(new JMenuItem(titleString));
+        pokeInfoPopup.add(attackMenuItem);
+        pokeInfoPopup.add(defenseMenuItem);
+        pokeInfoPopup.add(spAttackMenuItem);
+        pokeInfoPopup.add(spDefenseMenuItem);
+        pokeInfoPopup.add(speedMenuItem);
+        pokeInfoPopup.add(healthMenuItem);
+        pokeInfoPopup.add(typesMenuItem);
+    }
+
+    private void addPokeInfoMenuItemListeners(JMenuItem menuItem, Pokemon pokEntity){
+        menuItem.addActionListener(e -> picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity))));
     }
 
     private void pokemonActions(Pokemon pokEntity, JLabel picLabel, JPopupMenu pokeInfoPopup){
@@ -449,32 +472,28 @@ public class GUI extends JFrame{
                             pokEntity.setPokeColor(Color.getHSBColor(20.f,20.f,20.f));
                         }
 
-                        BufferedImage coloredPokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                                pokEntity.getSpeedScale(), pokEntity.getHealthScale(), pokEntity.getPokeColor());
+                        BufferedImage coloredPokePicture = imgHandler.generateIcon(pokEntity);
                         picLabel.setIcon(new ImageIcon(coloredPokePicture));
-                        //orange, cyan, lightgreen, magenta,
 
                         pokEntity.setChosenForTeam(true);
 
                         for (Map.Entry<JLabel, Pokemon> entry: teamMap.entrySet()) {
                             if (entry.getValue()==dummy){
                                 teamMap.put(entry.getKey(), pokEntity);
-                                entry.getKey().setIcon(new ImageIcon(pokEntity.getSprite()));
+                                entry.getKey().setIcon(new ImageIcon(ImageHandler.drawColorRectangle(pokEntity)));
                                 break;
                             }
                         }
-
                         circleCount++;
                     }
                 }
 
                 else if (pokEntity.isChosenForTeam()){
-                    BufferedImage coloredPokePicture = imgHandler.generateIconComposition(pokEntity.getAttackScale(), pokEntity.getDefenseScale(), pokEntity.getSpAttackScale(), pokEntity.getSpDefenseScale(),
-                            pokEntity.getSpeedScale(), pokEntity.getHealthScale(), Color.WHITE);
+                    pokEntity.setPokeColor(Color.WHITE);
+                    BufferedImage coloredPokePicture = imgHandler.generateIcon(pokEntity);
                     picLabel.setIcon(new ImageIcon(coloredPokePicture));
                     pokEntity.setChosenForTeam(false);
                     circleCount--;
-                    pokEntity.setPokeColor(Color.WHITE);
 
                     for (Map.Entry<JLabel, Pokemon> entry: teamMap.entrySet()) {
                         if (entry.getValue()==pokEntity){
@@ -483,7 +502,6 @@ public class GUI extends JFrame{
                             break;
                         }
                     }
-
                 }
             }
         });
