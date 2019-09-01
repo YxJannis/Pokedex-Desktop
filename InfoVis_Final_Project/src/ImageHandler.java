@@ -65,18 +65,18 @@ public class ImageHandler {
             yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
 
             testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            numberSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            attackSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            spAttackSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            defenseSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            spDefenseSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            speedSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            healthSortButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            numberSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonNumber.png"));
+            attackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonAttack.png"));
+            spAttackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpAtk.png"));
+            defenseSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonDefense.png"));
+            spDefenseSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpDef.png"));
+            speedSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpeed.png"));
+            healthSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonHealth.png"));
 
-            generationFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            typeFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            isLegendaryFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            resetFilterButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            generationFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonGeneration.png"));
+            typeFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonType.png"));
+            isLegendaryFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonLegendary.png"));
+            resetFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonResetFilter.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
