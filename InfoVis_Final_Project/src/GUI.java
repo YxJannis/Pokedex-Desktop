@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -40,13 +38,7 @@ public class GUI extends JFrame{
 
     private JPopupMenu pokeInfoPopup;
 
-    private JMenuItem attackMenuItem;
-    private JMenuItem defenseMenuItem;
-    private JMenuItem spAttackMenuItem;
-    private JMenuItem spDefenseMenuItem;
-    private JMenuItem speedMenuItem;
-    private JMenuItem healthMenuItem;
-    private JMenuItem typesMenuItem;
+    private LinkedHashMap<JMenuItem, Boolean> pokeInfoPopupMap= new LinkedHashMap<>();
 
     private JButton sortByNumberBtn;
     private JButton sortByAttackBtn;
@@ -391,12 +383,12 @@ public class GUI extends JFrame{
             ImageIcon pokeIcon = new ImageIcon(pokePicture);
             JLabel picLabel = new JLabel(pokeIcon);
 
+            mainPanel.add(picLabel);
+            picLabelMap.put(pokEntity, picLabel);
 
             fillPokeInfoPopup(pokEntity);
             pokemonActions(pokEntity, picLabel, pokeInfoPopup);
 
-            mainPanel.add(picLabel);
-            picLabelMap.put(pokEntity, picLabel);
         }
 
         if (initialFill) {
@@ -407,19 +399,28 @@ public class GUI extends JFrame{
         mainPanel.repaint();
     }
 
+
     public void fillPokeInfoPopup(Pokemon pokEntity){
-        attackMenuItem = new JMenuItem("Attack:" + pokEntity.getAttack());
-        defenseMenuItem = new JMenuItem("Defense:" + pokEntity.getDefense());
-        spAttackMenuItem = new JMenuItem("Special Atk:" + pokEntity.getSpAttack());
-        spDefenseMenuItem = new JMenuItem("Special Def:" + pokEntity.getSpDefense());
-        speedMenuItem = new JMenuItem("Speed:" + pokEntity.getSpeed());
-        healthMenuItem = new JMenuItem("Health:" + pokEntity.getHealth());
+
+        JMenuItem attackMenuItem = new JMenuItem("Attack:" + pokEntity.getAttack());
+        JMenuItem defenseMenuItem = new JMenuItem("Defense:" + pokEntity.getDefense());
+        JMenuItem spAttackMenuItem = new JMenuItem("Special Atk:" + pokEntity.getSpAttack());
+        JMenuItem spDefenseMenuItem = new JMenuItem("Special Def:" + pokEntity.getSpDefense());
+        JMenuItem speedMenuItem = new JMenuItem("Speed:" + pokEntity.getSpeed());
+        JMenuItem healthMenuItem = new JMenuItem("Health:" + pokEntity.getHealth());
+
+        pokeInfoPopupMap.put(attackMenuItem, false);
+        pokeInfoPopupMap.put(defenseMenuItem, false);
+        pokeInfoPopupMap.put(spAttackMenuItem, false);
+        pokeInfoPopupMap.put(spDefenseMenuItem, false);
+        pokeInfoPopupMap.put(speedMenuItem, false);
+        pokeInfoPopupMap.put(healthMenuItem, false);
 
         String typeString = pokEntity.getType1().toString().substring(0,1).toUpperCase() + pokEntity.getType1().toString().substring(1).toLowerCase();
         if (pokEntity.getType2() != null){
             typeString = typeString + ", " + pokEntity.getType2().toString().substring(0,1).toUpperCase() + pokEntity.getType2().toString().substring(1).toLowerCase();
         }
-        typesMenuItem = new JMenuItem("Types: " + typeString);
+        JMenuItem typesMenuItem = new JMenuItem("Types: " + typeString);
 
         String titleString = pokEntity.getName() + " - Nr: " + pokEntity.getNumber();
 
@@ -436,10 +437,33 @@ public class GUI extends JFrame{
         pokeInfoPopup.add(speedMenuItem);
         pokeInfoPopup.add(healthMenuItem);
         pokeInfoPopup.add(typesMenuItem);
+
+       /* for (Map.Entry<JMenuItem, String> entry: pokeInfoPopupMap.entrySet()) {
+            addPokeInfoMenuItemListeners(entry.getKey(),pokEntity);
+        }*/
+       addPokeInfoMenuItemListeners(attackMenuItem,pokEntity,"attack");
+       addPokeInfoMenuItemListeners(defenseMenuItem,pokEntity,"defense");
+       addPokeInfoMenuItemListeners(spAttackMenuItem,pokEntity,"spAttack");
+       addPokeInfoMenuItemListeners(spDefenseMenuItem,pokEntity,"spDefense");
+       addPokeInfoMenuItemListeners(speedMenuItem,pokEntity,"speed");
+       addPokeInfoMenuItemListeners(healthMenuItem,pokEntity,"health");
+
     }
 
-    private void addPokeInfoMenuItemListeners(JMenuItem menuItem, Pokemon pokEntity){
-        menuItem.addActionListener(e -> picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity))));
+    private void addPokeInfoMenuItemListeners(JMenuItem menuItem, Pokemon pokEntity, String attribute){
+        menuItem.addActionListener(e -> {
+            boolean isColored = pokeInfoPopupMap.get(menuItem);
+            if (!isColored) {
+                picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity, attribute)));
+                pokeInfoPopupMap.put(menuItem, true);
+            }
+            else{
+                picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity)));
+                pokeInfoPopupMap.put(menuItem, false);
+            }
+
+                //else: picLabelMap.get(pokEntity).setIcon(new ImageIcon(imgHandler.generateIcon(pokEntity)));
+        });
     }
 
     private void pokemonActions(Pokemon pokEntity, JLabel picLabel, JPopupMenu pokeInfoPopup){
