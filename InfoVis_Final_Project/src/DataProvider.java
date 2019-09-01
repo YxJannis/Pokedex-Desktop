@@ -205,6 +205,56 @@ public class DataProvider {
         return pokemon;
     }
 
+    public void diagonalTraversal(int rows, int cols) {
+
+        //workaround for gui having not enough cols
+        if(rows*cols < pokemon.size()){
+            cols++;
+        }
+
+        //matrix to save pokemon at right place for ordering
+        Pokemon[][] matrix = new Pokemon[rows][cols];
+
+        ArrayList<Pokemon> oldOrder = new ArrayList<>();
+        for (Pokemon p : pokemon) {
+            oldOrder.add(p);
+        }
+
+        //add dummy pokemon for empty matrix positions
+        while(oldOrder.size() < rows*cols){
+            oldOrder.add(new Pokemon());
+        }
+
+        int maxSum = rows + cols - 2;
+
+        //save pokemon to ordered pos in matrix
+        for (int sum = 0; sum <= maxSum; sum++) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (i + j - sum == 0) {
+                        if(!oldOrder.isEmpty()){
+                            matrix[i][j] = oldOrder.get(0);
+                            oldOrder.remove(0);
+                        }
+                    }
+                }
+            }
+        }
+
+        ArrayList<Pokemon> newOrder = new ArrayList<>();
+
+        //copy non dummy pokemon from matrix to new arrayList
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if(matrix[i][j].getNumber() != -1){
+                    newOrder.add(matrix[i][j]);
+                }
+            }
+        }
+
+        pokemon = newOrder;
+    }
+
     // Main method for data analysis and testing
     /*
     public static void main(String[] args) {

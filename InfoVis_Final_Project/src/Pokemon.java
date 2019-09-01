@@ -34,6 +34,7 @@ public class Pokemon {
     private boolean chosenForTeam = false;
 
     public Pokemon() {
+        number = -1;
     }
 
     public Pokemon(int attack, int defense, int spAttack, int spDefense, int speed, int health, String name, int number, int generation, boolean legendary, PokeType type1, PokeType type2) {
