@@ -61,7 +61,7 @@ public class ImageHandler {
             pokeBallImg = ImageIO.read(new File("src/images/pokeball-1.png"));
             yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
 
-            testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
+            //testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
             numberSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonNumber.png"));
             attackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonAttack.png"));
             spAttackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpAtk.png"));
