@@ -419,6 +419,8 @@ public class GUI extends JFrame{
             titleString = pokEntity.getName() + " " + (char) 9733 + " - Nr: " + pokEntity.getNumber();
         }
 
+        JMenuItem generationMenuItem = new JMenuItem("Generation: " + pokEntity.getGeneration());
+
         pokeInfoPopup = new JPopupMenu("Pokemon Info");
         pokeInfoPopup.add(new JMenuItem(titleString));
         pokeInfoPopup.add(attackMenuItem);
@@ -428,6 +430,7 @@ public class GUI extends JFrame{
         pokeInfoPopup.add(speedMenuItem);
         pokeInfoPopup.add(healthMenuItem);
         pokeInfoPopup.add(typesMenuItem);
+        pokeInfoPopup.add(generationMenuItem);
 
 
     }
