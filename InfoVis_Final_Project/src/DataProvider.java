@@ -101,6 +101,89 @@ public class DataProvider {
         }
     }
 
+    //alternative sort with arrayList as parameter
+    public void sortByAttribute(String attribute, boolean descending, ArrayList<Pokemon> pokemon){
+        switch(attribute){
+            case "number":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getNumber() == o2.getNumber()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getNumber() > o2.getNumber() ? -1 : 1;
+                    else
+                        return o1.getNumber() < o2.getNumber() ? -1 : 1;
+                });
+                break;
+            case "attack":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getAttack() == o2.getAttack()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getAttack() > o2.getAttack() ? -1 : 1;
+                    else
+                        return o1.getAttack() < o2.getAttack() ? -1 : 1;
+                });
+
+                break;
+            case "defense":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getDefense() == o2.getDefense()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getDefense() > o2.getDefense() ? -1 : 1;
+                    else
+                        return o1.getDefense() < o2.getDefense() ? -1 : 1;
+                });
+                break;
+            case "spAttack":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpAttack() == o2.getSpAttack()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getSpAttack() > o2.getSpAttack() ? -1 : 1;
+                    else
+                        return o1.getSpAttack() < o2.getSpAttack() ? -1 : 1;
+                });
+                break;
+            case "spDefense":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpDefense() == o2.getSpDefense()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getSpDefense() > o2.getSpDefense() ? -1 : 1;
+                    else
+                        return o1.getSpDefense() < o2.getSpDefense() ? -1 : 1;
+                });
+                break;
+            case "speed":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getSpeed() == o2.getSpeed()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getSpeed() > o2.getSpeed() ? -1 : 1;
+                    else
+                        return o1.getSpeed() < o2.getSpeed() ? -1 : 1;
+                });
+                break;
+            case "health":
+                Collections.sort(pokemon, (o1, o2) -> {
+                    if (o1.getHealth() == o2.getHealth()){
+                        return 0;
+                    }
+                    if (descending)
+                        return o1.getHealth() > o2.getHealth() ? -1 : 1;
+                    else
+                        return o1.getHealth() < o2.getHealth() ? -1 : 1;
+                });
+        }
+    }
+
     public void filterByGeneration(int generation){
         ArrayList<Pokemon> filteredList = new ArrayList<>();
         for (Pokemon pokemon: pokemon) {
@@ -241,6 +324,8 @@ public class DataProvider {
             }
         }
 
+        matrix = reorderLastRow(matrix);
+
         ArrayList<Pokemon> newOrder = new ArrayList<>();
 
         //copy non dummy pokemon from matrix to new arrayList
@@ -253,6 +338,49 @@ public class DataProvider {
         }
 
         pokemon = newOrder;
+    }
+
+    //fills  empty positions in lower right side of matrix with pokemon from last row
+    public Pokemon[][] reorderLastRow(Pokemon[][] matrix){
+        for (int i = matrix.length-2; i >= 0; i--) {
+            for (int j = matrix[0].length-1; j >= 0 ; j--) {
+                if(matrix[i][j].getNumber() == -1){
+                    matrix[i][j] = getLastPokemon(matrix);
+                }
+            }   
+        }
+        return matrix;
+    }
+
+    //gets last pokemon from last row
+    public Pokemon getLastPokemon(Pokemon[][] matrix){
+        for (int i = matrix[0].length-1; i >= 0 ; i--) {
+            if(matrix[matrix.length-1][i].getNumber() != -1){
+                Pokemon returnPokemon = matrix[matrix.length-1][i];
+                matrix[matrix.length-1][i] = new Pokemon();
+                return returnPokemon;
+            }
+        }
+        return new Pokemon();
+    }
+
+    //sort every row
+    public void sortRowsByAttribute(String attribute, boolean descending, int rows, int cols){
+        ArrayList<Pokemon>[] arrayOfLists = new ArrayList[rows];
+        for (int i = 0; i < arrayOfLists.length; i++) {
+            arrayOfLists[i] = new ArrayList<>();
+            for (int j = 0; j < cols; j++) {
+                if(i*cols + j < pokemon.size()){
+                    arrayOfLists[i].add(pokemon.get(i*cols + j));
+                }
+            }
+            sortByAttribute(attribute, descending, arrayOfLists[i]);
+        }
+        ArrayList<Pokemon> sortedPokemon = new ArrayList<>();
+        for (int i = 0; i < arrayOfLists.length; i++) {
+            sortedPokemon.addAll(arrayOfLists[i]);
+        }
+        pokemon = sortedPokemon;
     }
 
     // Main method for data analysis and testing

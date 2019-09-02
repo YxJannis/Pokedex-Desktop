@@ -510,7 +510,8 @@ public class GUI extends JFrame{
         sortByAttackBtn.addActionListener(e -> {
             sortBy="attack";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
 
@@ -518,35 +519,40 @@ public class GUI extends JFrame{
         sortByDefenseBtn.addActionListener(e -> {
             sortBy="defense";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
         });
         sortBySpAttackBtn.addActionListener(e -> {
             sortBy="spAttack";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
         });
         sortBySpDefenseBtn.addActionListener(e -> {
             sortBy="spDefense";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
         });
         sortBySpeedBtn.addActionListener(e -> {
             sortBy="speed";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
         });
         sortByHealthBtn.addActionListener(e -> {
             sortBy="health";
             dataProvider.sortByAttribute(sortBy, descending);
-            //dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.diagonalTraversal(rows, cols);
+            dataProvider.sortRowsByAttribute(sortBy, descending, rows, cols);
             fillDataGrid();
             descending = !descending;
         });
