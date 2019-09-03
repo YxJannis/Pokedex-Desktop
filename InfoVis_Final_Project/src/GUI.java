@@ -608,7 +608,9 @@ public class GUI extends JFrame{
         handleIsLegendaryFilters(legendaryFalse, false);
 
         resetFilterBtn.addActionListener(e -> {
+            sortBy = "number";
             dataProvider.resetFilter();
+            dataProvider.sortByAttribute(sortBy,false);
             fillDataGrid();
         });
 
