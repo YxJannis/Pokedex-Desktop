@@ -383,35 +383,4 @@ public class DataProvider {
         pokemon = sortedPokemon;
     }
 
-    // Main method for data analysis and testing
-    /*
-    public static void main(String[] args) {
-        DataProvider p = new DataProvider();
-
-        ArrayList<Integer> attack = new ArrayList<>();
-        ArrayList<Integer> defense = new ArrayList<>();
-        ArrayList<Integer> spAttack = new ArrayList<>();
-        ArrayList<Integer> spDefense = new ArrayList<>();
-        ArrayList<Integer> speed = new ArrayList<>();
-        ArrayList<Integer> health = new ArrayList<>();
-        ArrayList<String> types = new ArrayList<>();
-        HashSet<String> typeSet = new HashSet<>();
-
-        for (int i = 0; i < p.pokemon.size(); i++) {
-            attack.add(p.pokemon.get(i).attack);
-            defense.add(p.pokemon.get(i).defense);
-            spAttack.add(p.pokemon.get(i).spAttack);
-            spDefense.add(p.pokemon.get(i).spDefense);
-            speed.add(p.pokemon.get(i).speed);
-            health.add(p.pokemon.get(i).health);
-            typeSet.add(p.pokemon.get(i).getType1().toString());
-            if (!(p.pokemon.get(i).getType2() == null)) {
-                typeSet.add(p.pokemon.get(i).getType2().toString());
-            }
-        }
-
-        System.out.println(typeSet);
-
-
-    }*/
 }

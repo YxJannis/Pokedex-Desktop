@@ -86,7 +86,7 @@ public class GUI extends JFrame{
     private JLabel pokeBallFive;
     private JLabel pokeBallSix;
 
-    public GUI(){
+    private GUI(){
         init();
     }
 
@@ -481,7 +481,7 @@ public class GUI extends JFrame{
                     }
                 }
 
-                else if (pokEntity.isChosenForTeam()){
+                else {
                     pokEntity.setPokeColor(Color.WHITE);
                     BufferedImage coloredPokePicture = imgHandler.generateIcon(pokEntity);
                     picLabel.setIcon(new ImageIcon(coloredPokePicture));
