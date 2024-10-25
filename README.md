@@ -1,12 +1,35 @@
-## Pokedex Desktop
+# Pokedex Desktop
 
-# What?
 This is an interactive visualization of the dataset of all 801 Pokémon from Generations 1 to 7. Discover the strongest or weakest Pokémon based on 6 attributes: Attack, Special Attack, Defense, Special Defense, Speed and Health.
 
-Analyze, compare, discover all Pokémon interactively in this easy-to-use visualization.
+Analyze, compare and discover all Pokémon interactively in this easy-to-use visualization.
 
-# How?
-The Pokedex Desktop is programmed in Java using IntelliJ as our IDE.
+## Requirements
 
-# Why?
-Why not?
+To run the `jar` file or compile the source code, you must have java installed.
+
+## Usage
+
+The `.jar` can be found in `out/Pokedex-Desktop.jar`. On Linux, run it by calling `java -jar Pokedex-Desktop.jar`.
+
+To generate the `.jar`, run the following command in the `src` directory:
+
+```bash
+jar cfm Pokedex-Desktop.jar Manifest.txt *.class
+```
+
+You can also compile the source code and run it this way:
+
+```bash
+cd src
+javac *.class
+java GUI
+```
+
+## Details
+
+The Pokedex Desktop is programmed exclusively in Java using Swing as Gui library.
+
+## Disclaimer
+
+The data in `pokemon.csv` as well as all sprites for pokemon are not our creation.
