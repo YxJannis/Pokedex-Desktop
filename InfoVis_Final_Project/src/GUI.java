@@ -147,9 +147,10 @@ public class GUI extends JFrame{
         add(menuPanel, BorderLayout.WEST);
         add(scrollpane);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(0,0,screenSize.width,screenSize.height);
+        setBounds(0,0,(int) Math.round(screenSize.width*0.8),(int) Math.round(screenSize.height*0.8));
         //pack();
         setVisible(true);
+        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     private void updateGridLayout(){

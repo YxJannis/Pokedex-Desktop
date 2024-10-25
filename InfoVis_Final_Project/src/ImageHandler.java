@@ -49,31 +49,31 @@ public class ImageHandler {
 
     public ImageHandler(){
         try {
-            attackImg = ImageIO.read(new File("src/images/attack.png"));
-            defenseImg = ImageIO.read(new File("src/images/defense.png"));
-            spAttackImg = ImageIO.read(new File("src/images/spAttack.png"));
-            spDefenseImg = ImageIO.read(new File("src/images/spDefense.png"));
-            speedImg = ImageIO.read(new File("src/images/speed.png"));
-            healthImg = ImageIO.read(new File("src/images/health.png"));
+            attackImg = ImageIO.read(new File("images/attack.png"));
+            defenseImg = ImageIO.read(new File("images/defense.png"));
+            spAttackImg = ImageIO.read(new File("images/spAttack.png"));
+            spDefenseImg = ImageIO.read(new File("images/spDefense.png"));
+            speedImg = ImageIO.read(new File("images/speed.png"));
+            healthImg = ImageIO.read(new File("images/health.png"));
 
-            sortHeaderImg = ImageIO.read(new File("src/images/sort-header.png"));
-            filterHeaderImg = ImageIO.read(new File("src/images/filter-header.png"));
-            pokeBallImg = ImageIO.read(new File("src/images/pokeball-1.png"));
-            yourTeamImg = ImageIO.read(new File("src/images/your-team-header.png"));
+            sortHeaderImg = ImageIO.read(new File("images/sort-header.png"));
+            filterHeaderImg = ImageIO.read(new File("images/filter-header.png"));
+            pokeBallImg = ImageIO.read(new File("images/pokeball-1.png"));
+            yourTeamImg = ImageIO.read(new File("images/your-team-header.png"));
 
-            //testButtonImg = ImageIO.read(new File("src/images/test-button.png"));
-            numberSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonNumber.png"));
-            attackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonAttack.png"));
-            spAttackSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpAtk.png"));
-            defenseSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonDefense.png"));
-            spDefenseSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpDef.png"));
-            speedSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonSpeed.png"));
-            healthSortButtonImg = ImageIO.read(new File("src/images/buttons/buttonHealth.png"));
+            //testButtonImg = ImageIO.read(new File("images/test-button.png"));
+            numberSortButtonImg = ImageIO.read(new File("images/buttons/buttonNumber.png"));
+            attackSortButtonImg = ImageIO.read(new File("images/buttons/buttonAttack.png"));
+            spAttackSortButtonImg = ImageIO.read(new File("images/buttons/buttonSpAtk.png"));
+            defenseSortButtonImg = ImageIO.read(new File("images/buttons/buttonDefense.png"));
+            spDefenseSortButtonImg = ImageIO.read(new File("images/buttons/buttonSpDef.png"));
+            speedSortButtonImg = ImageIO.read(new File("images/buttons/buttonSpeed.png"));
+            healthSortButtonImg = ImageIO.read(new File("images/buttons/buttonHealth.png"));
 
-            generationFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonGeneration.png"));
-            typeFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonType.png"));
-            isLegendaryFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonLegendary.png"));
-            resetFilterButtonImg = ImageIO.read(new File("src/images/buttons/buttonResetFilter.png"));
+            generationFilterButtonImg = ImageIO.read(new File("images/buttons/buttonGeneration.png"));
+            typeFilterButtonImg = ImageIO.read(new File("images/buttons/buttonType.png"));
+            isLegendaryFilterButtonImg = ImageIO.read(new File("images/buttons/buttonLegendary.png"));
+            resetFilterButtonImg = ImageIO.read(new File("images/buttons/buttonResetFilter.png"));
 
         } catch (IOException e) {
             e.printStackTrace();

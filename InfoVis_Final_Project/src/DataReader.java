@@ -27,7 +27,7 @@ public class DataReader {
     private void readPokemon(){
         pokemon = new ArrayList<Pokemon>();
 
-        try(BufferedReader reader = new BufferedReader(new FileReader("src/pokemon.csv"))){
+        try(BufferedReader reader = new BufferedReader(new FileReader("pokemon.csv"))){
             String line = reader.readLine();
             line = reader.readLine();
 
@@ -79,7 +79,7 @@ public class DataReader {
         for(Pokemon p : pokemon){
             BufferedImage sprite = null;
             try {
-                sprite = ImageIO.read(new File("src/images/sprites/pokemon/" + p.getNumber() + ".png"));
+                sprite = ImageIO.read(new File("images/sprites/pokemon/" + p.getNumber() + ".png"));
             } catch (IOException e) {
                 System.out.println("Error while reading sprite for pokemon " + p.getNumber());
                 e.printStackTrace();
